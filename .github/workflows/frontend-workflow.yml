@@ -31,7 +31,7 @@ jobs:
 
     - name: Run Unit Tests with Coverage
       run: npm run test -- --coverage
-      working-directory: ./frontend
+      working-directory: ./frontend/tests
 
     - name: Coveralls GitHub Action for Frontend
       uses: coverallsapp/github-action@v2.2.3
