@@ -1,0 +1,81 @@
+# MaterialsDB Project
+
+This project consists of a backend developed using Flask and a frontend using Bootstrap.
+
+## Backend Setup
+
+### Initialize the Conda Environment
+
+1. Navigate to the backend directory and run the following command to create a Conda environment:
+    ```bash
+    conda env create -f environment.yml
+    ```
+2. Activate the environment:
+    ```bash
+    conda activate materialsDB
+    ```
+
+### Install Python Dependencies
+
+Run the following command to install the necessary Python packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Running Tests
+
+To run the tests, run the following command:
+
+```bash
+pytest
+```
+
+## Frontend Setup
+
+### Install Node.s and npm
+If you don't have Node.js and npm installed, download and install them from here: https://nodejs.org/en
+
+### Install Project Dependencies
+
+Navigate to the drontend directory and run:
+
+```bash
+npm install
+```
+
+This will install all the dependencies listed in package.json.
+
+### Running tests
+
+To run the front-end tests, run the following command:
+
+```bash
+npm test
+```
+
+### Linting and Formatting
+
+To check for linting issues:
+
+```bash
+npm run lint
+```
+
+To fix linting issues:
+
+```bash
+npm run lint:fix
+```
+
+To check for formatting issues:
+
+```bash
+npm run prettier
+```
+
+To fix formatting issues:
+
+```bash
+npm run prettier:fix
+```

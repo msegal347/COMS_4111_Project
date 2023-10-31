@@ -1,0 +1,64 @@
+name: CI/CD Pipeline for Materials Database
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    # Common Steps
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    # Node.js Setup and Tests
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20.x'
+        npm-version: '7.x'
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Run ESLint
+      run: npm run lint
+
+    - name: Run Unit Tests with Coverage
+      run: npm run test -- --coverage --testPathIgnorePatterns='integrations/'
+
+    - name: Upload Coverage as Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage-js
+        path: ./coverage/lcov.info
+
+    # Python Setup and Tests
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Install Python Dependencies
+      run: pip install -r backend/requirements.txt
+
+    - name: Run Pytest
+      run: pytest backend/tests/ --cov=backend/app
+
+    - name: Upload Python Coverage as Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage-py
+        path: ./backend/coverage.xml
+
+    # Coveralls GitHub Action
+    - name: Coveralls GitHub Action
+      uses: coverallsapp/github-action@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        coveralls-repo-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
