@@ -29,8 +29,8 @@ jobs:
       run: npm run lint
       working-directory: ./frontend
 
-    - name: Run specific test file
-      run: npm test App.test.js
+    - name: Run Jest tests
+      run: npm test
       working-directory: ./frontend/tests
 
     - name: Coveralls GitHub Action for Frontend
