@@ -30,8 +30,8 @@ jobs:
       working-directory: ./frontend
 
     - name: Run specific test file
-      run: npm test tests/App.test.js
-      working-directory: ./frontend
+      run: npm test App.test.js
+      working-directory: ./frontend/tests
 
     - name: Coveralls GitHub Action for Frontend
       uses: coverallsapp/github-action@v2.2.3
