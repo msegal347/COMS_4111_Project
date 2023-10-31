@@ -2,7 +2,7 @@ module.exports = {
     roots: ['<rootDir>/src'],
     testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$',
     moduleFileExtensions: ['js', 'jsx', 'json'],
-    testEnvironment: 'jsdom',
+    testEnvironment: 'jest-environment-jsdom',
     collectCoverage: true,
     coverageReporters: ['json', 'lcov', 'text', 'clover'],
     collectCoverageFrom: [
