@@ -7,6 +7,7 @@ Flask-Bootstrap==3.3.7.1
 
 # Pytest for testing
 pytest==7.3.1
+toml==0.10.2
 
 # WSGI server for deploying the application
 gunicorn==20.1.0
