@@ -31,7 +31,14 @@ jobs:
       run: npm run lint
 
     - name: Run Unit Tests with Coverage
-      run: npm run test -- --coverage --testPathIgnorePatterns='integrations/'
+      run: npm run test -- --coverage
+
+    - name: Coveralls GitHub Action for Frontend
+      uses: coverallsapp/github-action@v2.2.3
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        flag-name: 'frontend'
+
 
     - name: Upload Coverage as Artifact
       uses: actions/upload-artifact@v2

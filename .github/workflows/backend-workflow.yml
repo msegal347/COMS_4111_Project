@@ -23,8 +23,15 @@ jobs:
     - name: Install Python Dependencies
       run: pip install -r backend/requirements.txt
 
-    - name: Run Pytest
-      run: pytest backend/tests/ --cov=backend/app
+    - name: Run Pytest with Coverage
+      run: cd backend && pytest tests/ --cov=app --cov-report=xml:coverage.xml
+      
+    - name: Coveralls GitHub Action for Backend
+      uses: coverallsapp/github-action@v2.2.3
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        flag-name: 'backend'
+
 
     - name: Upload Python Coverage as Artifact
       uses: actions/upload-artifact@v2
