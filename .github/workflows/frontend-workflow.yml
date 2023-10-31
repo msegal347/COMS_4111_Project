@@ -29,8 +29,11 @@ jobs:
       run: npm run lint
       working-directory: ./frontend
 
-    - name: Run Unit Tests with Coverage
-      run: npm run test -- --coverage
+    - name: List directory and Run Tests
+      run: |
+        pwd
+        ls -R
+        npm run test -- --coverage
       working-directory: ./frontend
 
     - name: Coveralls GitHub Action for Frontend
