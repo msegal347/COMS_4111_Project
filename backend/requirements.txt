@@ -4,6 +4,7 @@ Flask==2.1.1
 # Flask extensions
 Flask-Cors==3.0.10
 Flask-Bootstrap==3.3.7.1
+Flask-SQLAlchemy==3.1.1
 
 # Pytest for testing
 pytest==7.4.3
