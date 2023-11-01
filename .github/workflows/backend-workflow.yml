@@ -23,8 +23,13 @@ jobs:
     - name: Install Python Dependencies
       run: pip install -r backend/requirements.txt
 
+    - name: Lint with Flake8
+      run: flake8
+      working-directory: ./backend
+
     - name: Run Pytest with Coverage
-      run: cd backend && pytest tests/ --cov=app --cov-report=xml:coverage.xml
+      run: pytest tests/ --cov=app --cov-report=xml:coverage/coverage.xml
+      working-directory: ./backend
       
     - name: Coveralls GitHub Action for Backend
       uses: coverallsapp/github-action@v2.2.3
