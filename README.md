@@ -36,6 +36,26 @@ To run the tests, run the following command:
 pytest
 ```
 
+### Linting and Formatting
+
+To check for linting issues:
+
+```bash
+flake8
+```
+
+To check for formatting issues:
+
+```bash
+black --check .
+```
+
+To fix formatting issues:
+
+```bash
+black .
+```
+
 ## Frontend Setup
 
 ### Install Node.s and npm

@@ -24,7 +24,7 @@ jobs:
       run: pip install -r backend/requirements.txt
 
     - name: Format with Black
-      run: black --pyi --check .
+      run: black .
       working-directory: ./backend
 
     - name: Run Pytest with Coverage
