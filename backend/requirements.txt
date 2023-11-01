@@ -1,5 +1,5 @@
 # Flask web framework
-Flask==2.1.1
+Flask==3.0.0
 
 # Flask extensions
 Flask-Cors==3.0.10
