@@ -2,6 +2,10 @@
 
 This project consists of a backend developed using Flask and a frontend using Bootstrap.
 
+## Frontend Coverage
+
+[![Coverage Status](https://coveralls.io/repos/github/msegal347/COMS_4111_Project/badge.svg?branch=main)](https://coveralls.io/github/msegal347/COMS_4111_Project?branch=main)
+
 ## Backend Setup
 
 ### Initialize the Conda Environment

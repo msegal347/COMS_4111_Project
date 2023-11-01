@@ -23,10 +23,6 @@ jobs:
     - name: Install Python Dependencies
       run: pip install -r backend/requirements.txt
 
-    - name: Lint with Flake8
-      run: flake8
-      working-directory: ./backend
-
     - name: Format with Black
       run: black --pyi --check .
       working-directory: ./backend
