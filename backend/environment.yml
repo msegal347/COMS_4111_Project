@@ -12,7 +12,7 @@ dependencies:
     - Flask-SQLAlchemy==3.1.1
     - gunicorn==20.1.0
     - psycopg2==2.9.3
-    - SQLAlchemy==1.4.25
+    - SQLAlchemy==2.0.22
     - requests==2.26.0
     - lxml==4.6.3
     - numpy==1.21.2
