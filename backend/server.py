@@ -51,6 +51,7 @@ conn.execute(
     """INSERT INTO test(name) VALUES ('grace hopper'), ('alan turing'), ('ada lovelace');"""
 )
 
+
 @app.before_request
 def before_request():
     """
@@ -69,6 +70,7 @@ def before_request():
         traceback.print_exc()
         g.conn = None
 
+
 @app.teardown_request
 def teardown_request(exception):
     """
@@ -79,6 +81,7 @@ def teardown_request(exception):
         g.conn.close()
     except Exception as e:
         pass
+
 
 #
 # @app.route is a decorator around index() that means:
@@ -152,6 +155,7 @@ def index():
     #
     return render_template("index.html", **context)
 
+
 #
 # This is an example of a different path.  You can see it at:
 #
@@ -164,6 +168,7 @@ def index():
 def another():
     return render_template("another.html")
 
+
 # Example of adding new data to the database
 @app.route("/add", methods=["POST"])
 def add():
@@ -171,10 +176,12 @@ def add():
     g.conn.execute("INSERT INTO test(name) VALUES (%s)", name)
     return redirect("/")
 
+
 @app.route("/login")
 def login():
     abort(401)
     this_is_never_executed()
+
 
 if __name__ == "__main__":
     import click
@@ -200,4 +207,5 @@ if __name__ == "__main__":
         HOST, PORT = host, port
         print("running on %s:%d" % (HOST, PORT))
         app.run(host=HOST, port=PORT, debug=debug, threaded=threaded)
+
     run()
