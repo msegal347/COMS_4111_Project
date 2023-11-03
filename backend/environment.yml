@@ -3,7 +3,6 @@ channels:
   - defaults
 dependencies:
   - python=3.9
-  - pip=23.3.1
   - pip:
     - pytest==7.3.1
     - Flask==3.0.0
