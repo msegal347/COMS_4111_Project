@@ -104,3 +104,17 @@ To fix formatting issues:
 ```bash
 npm run prettier:fix
 ```
+
+### Accessing the Docker Database
+
+To access the database, run the following command:
+
+```bash
+docker exec -it docker-db-1 /bin/bash
+```
+
+Then, run the following command to access the database:
+
+```bash
+psql -U username database_name
+```
