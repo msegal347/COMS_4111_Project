@@ -1,6 +1,5 @@
 from flask import Blueprint, jsonify, abort
-from app.extensions import db
-from app.models.material_model import Material
+from app import db
 from app.services.material_service import get_all_materials, get_material_by_id
 import logging
 
@@ -12,11 +11,11 @@ material_bp = Blueprint("material", __name__, url_prefix="/api/material")
 def get_materials():
     try:
         materials = get_all_materials()
+        return jsonify(materials), 200
     except Exception as e:
         db.session.rollback()
-        logger.error(f"Failed to get materials: {e}")
+        logger.exception("Failed to get materials")  # Use logger.exception to log the stack trace
         abort(500, description="Internal Server Error")
-    return jsonify(materials), 200
 
 @material_bp.route("/<int:material_id>", methods=["GET"])
 def get_material(material_id):
@@ -28,4 +27,5 @@ def get_material(material_id):
             abort(404, description="Material Not Found")
     except Exception as e:
         db.session.rollback()
+        logger.exception(f"Failed to get material with ID {material_id}")  # Log the ID that caused the issue
         abort(500, description="Internal Server Error")

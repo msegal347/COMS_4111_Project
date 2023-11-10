@@ -1,4 +1,5 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, abort
+from app import db
 from app.services.general_categories_service import (
     get_all_general_categories,
     get_general_category_by_id,
@@ -11,15 +12,22 @@ general_categories_bp = Blueprint('general_categories', __name__, url_prefix='/a
 
 @general_categories_bp.route('/', methods=['GET'])
 def get_categories():
-    categories = get_all_general_categories()
-    return jsonify([category.to_dict() for category in categories]), 200
+    try:
+        categories = get_all_general_categories()
+        return jsonify([category.to_dict() for category in categories]), 200
+    except Exception as e:
+        # Log the exception and return a 500 error
+        abort(500, description=str(e))
 
 @general_categories_bp.route('/<int:category_id>', methods=['GET'])
 def get_category(category_id):
-    category = get_general_category_by_id(category_id)
-    if category:
-        return jsonify(category.to_dict()), 200
-    return jsonify({'message': 'Category not found'}), 404
+    try:
+        category = get_general_category_by_id(category_id)
+        if category:
+            return jsonify(category.to_dict()), 200
+        abort(404, description='Category not found')
+    except Exception as e:
+        abort(500, description=str(e))
 
 @general_categories_bp.route('/', methods=['POST'])
 def create_category():

@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request, abort
+from app import db
 from app.services.industrial_service import (
     get_all_applications,
     get_application_by_id,

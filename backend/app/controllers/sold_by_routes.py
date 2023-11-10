@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request, abort
+from app import db
 from app.models.sold_by_model import SoldBy
 from app.services.sold_by_service import (
     get_all_sold_by_relations, get_sold_by_relation, create_sold_by_relation,

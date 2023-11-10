@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, abort
-from app.extensions import db
+from app import db  # Update this import according to your app structure
 from app.models.environmental_model import EnvironmentalImpact
 import logging
 
