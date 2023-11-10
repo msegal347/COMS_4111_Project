@@ -10,7 +10,6 @@ from . import industrial_routes
 from . import material_routes
 from . import sold_by_routes
 
-# Define the root route here if desired or you can leave it in the main app.py
 @main.route('/')
 def index():
     return 'Welcome to the Materials Database API!'

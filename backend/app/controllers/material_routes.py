@@ -14,7 +14,7 @@ def get_materials():
         return jsonify(materials), 200
     except Exception as e:
         db.session.rollback()
-        logger.exception("Failed to get materials")  # Use logger.exception to log the stack trace
+        logger.exception("Failed to get materials") 
         abort(500, description="Internal Server Error")
 
 @material_bp.route("/<int:material_id>", methods=["GET"])
@@ -27,5 +27,5 @@ def get_material(material_id):
             abort(404, description="Material Not Found")
     except Exception as e:
         db.session.rollback()
-        logger.exception(f"Failed to get material with ID {material_id}")  # Log the ID that caused the issue
+        logger.exception(f"Failed to get material with ID {material_id}") 
         abort(500, description="Internal Server Error")

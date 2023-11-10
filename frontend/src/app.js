@@ -10,7 +10,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/materials" element={<MaterialsPage />} />
-        <Route path="/" element={<MaterialsPage />} /> {/* Add this line */}
+        <Route path="/" element={<MaterialsPage />} /> { /* Default route */}
         {/* Other routes */}
       </Routes>
     </Router>

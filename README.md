@@ -36,6 +36,10 @@ To run the tests, run the following command:
 pytest
 ```
 
+```bash
+set PYTHONPATH=D:\School\Intro_to_Databases\DB_Project\COMS_4111_Project\backend
+```
+
 ### Linting and Formatting
 
 To check for linting issues:
@@ -117,4 +121,10 @@ Then, run the following command to access the database:
 
 ```bash
 psql -U username database_name
+```
+
+If running into a collation error, run the following command:
+
+```bash
+ALTER DATABASE "materialsDB" REFRESH COLLATION VERSION;
 ```

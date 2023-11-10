@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, abort
-from app import db  # Assuming db is initialized in your app/__init__.py
-from app.models.company_model import Company  # Adjust the import path according to your project structure
+from app import db 
+from app.models.company_model import Company 
 
 company_bp = Blueprint("company", __name__, url_prefix="/api/company")
 

@@ -22,7 +22,7 @@ const useMaterials = () => {
     };
 
     fetchMaterials();
-  }, [filters]); // Re-run this effect when filters change
+  }, [filters]);
 
   return { materials, filters, setFilters, loading, error };
 };
