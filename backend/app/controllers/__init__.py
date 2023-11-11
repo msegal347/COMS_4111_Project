@@ -9,6 +9,7 @@ from . import general_categories_routes
 from . import industrial_routes
 from . import material_routes
 from . import sold_by_routes
+from . import query_routes
 
 @main.route('/')
 def index():

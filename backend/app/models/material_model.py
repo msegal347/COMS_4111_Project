@@ -22,6 +22,10 @@ class Material(db.Model):
     conductivity = db.Column(db.Float, CheckConstraint('conductivity >= 0'))
     resistivity = db.Column(db.Float, CheckConstraint('resistivity >= 0'))
 
+        # Define the relationships
+    sold_by_relation = db.relationship('SoldBy', backref='material', lazy=True)
+    environmental_impact = db.relationship('EnvironmentalImpact', backref='material', uselist=False)
+
     def __init__(self, materialname, generalcategoryid, elementalcomposition=None, 
                  molecularweight=None, tensilestrength=None, ductility=None, hardness=None,
                  thermalconductivity=None, heatcapacity=None, meltingpoint=None, refractiveindex=None,

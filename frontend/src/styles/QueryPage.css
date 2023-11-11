@@ -27,11 +27,30 @@
   }
   
   .results-display {
-    background-color: #f9f9f9;
-    border: 1px solid #e0e0e0;
-    padding: 10px;
+    margin-top: 20px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
   }
   
+  .results-content {
+    max-height: 300px;
+    overflow: auto;
+  }
+  
+  .result-item {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+  }
+  
+  .result-item:last-child {
+    border-bottom: none;
+  }
+  
+  .result-item > div {
+    margin-bottom: 5px;
+  }
   .error {
     color: #ff0000;
   }

@@ -18,4 +18,5 @@ class Config(object):
     SECRET_KEY = os.environ.get("SECRET_KEY", "secret")
 
     # CORS settings
-    CORS_HEADERS = os.environ.get("CORS_HEADERS", "Content-Type")
+    CORS_HEADERS = os.environ.get("CORS_HEADERS", "*")
+
