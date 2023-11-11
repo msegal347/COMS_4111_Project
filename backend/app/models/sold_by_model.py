@@ -4,7 +4,6 @@ from sqlalchemy import CheckConstraint
 class SoldBy(db.Model):
     __tablename__ = 'soldby'
 
-    # Column names should be in lowercase to match PostgreSQL's default behavior.
     materialid = db.Column(db.Integer, db.ForeignKey('material.materialid'), primary_key=True, nullable=False)
     companyid = db.Column(db.Integer, db.ForeignKey('company.companyid'), primary_key=True, nullable=False)
     baseprice = db.Column(db.Float, nullable=False)

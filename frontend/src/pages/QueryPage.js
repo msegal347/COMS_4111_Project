@@ -1,5 +1,3 @@
-// QueryPage.js
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/QueryPage.css';
@@ -8,7 +6,6 @@ const QueryPage = () => {
   const [queryOptions, setQueryOptions] = useState({
     materials: {},
     companies: {},
-    // Add more tables as needed
   });
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);

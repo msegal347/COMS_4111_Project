@@ -12,11 +12,11 @@ environmental_bp = Blueprint('environmental', __name__, url_prefix='/api/environ
 # Helper function to serialize EnvironmentalImpact objects
 def serialize_impact(impact):
     return {
-        'impact_id': impact.impactid,  # Use lowercase as defined in the model
-        'material_id': impact.materialid,  # Use lowercase as defined in the model
-        'toxicity_level': impact.toxicitylevel,  # Use lowercase as defined in the model
-        'recyclability': impact.recyclability,  # Use lowercase as defined in the model
-        'carbon_footprint': impact.carbonfootprint  # Use lowercase as defined in the model
+        'impact_id': impact.impactid, 
+        'material_id': impact.materialid,  
+        'toxicity_level': impact.toxicitylevel, 
+        'recyclability': impact.recyclability, 
+        'carbon_footprint': impact.carbonfootprint
     }
 
 @environmental_bp.route('/', methods=['GET'])
@@ -37,4 +37,3 @@ def get_environmental_impact(impact_id):
         logger.error(f"Error fetching environmental impact with id {impact_id}: {e}")
         abort(500, description="Internal Server Error")
 
-# Additional routes can also be updated accordingly

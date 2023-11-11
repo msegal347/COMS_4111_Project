@@ -1,7 +1,6 @@
 import React from 'react';
 
 const GeneralCategoriesFilter = ({ onFilterChange }) => {
-  // Example filter: Category name
   return (
     <div>
       <input

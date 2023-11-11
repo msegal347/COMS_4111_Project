@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getGeneralCategories } from '../services/api'; // ensure you have this function defined in api.js
+import { getGeneralCategories } from '../services/api';
 
 const useGeneralCategories = () => {
   const [categories, setCategories] = useState([]);
@@ -10,8 +10,8 @@ const useGeneralCategories = () => {
     const fetchCategories = async () => {
       setLoading(true);
       try {
-        const response = await getGeneralCategories(); // Use the service function
-        setCategories(response.data); // Assuming the API returns an array of categories
+        const response = await getGeneralCategories();
+        setCategories(response.data);
         setError(null);
       } catch (err) {
         setError(err);
@@ -21,7 +21,7 @@ const useGeneralCategories = () => {
     };
 
     fetchCategories();
-  }, []); // Empty dependency array means this effect will only run once after the initial render
+  }, []);
 
   return { categories, loading, error };
 };

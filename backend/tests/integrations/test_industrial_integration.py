@@ -27,12 +27,11 @@ def test_get_all_applications(test_client):
     assert type(applications) is list
 
 def test_get_specific_application(test_client):
-    test_application_id = 1  # Replace with a valid ID from your test database.
+    test_application_id = 1 
     response = test_client.get(f'/api/industrial/{test_application_id}')
     assert response.status_code == 200
     application = response.get_json()
     assert application is not None
-    # Use the correct key as defined in your to_dict method of IndustrialApplication model
     assert application['applicationid'] == test_application_id
 
 if __name__ == "__main__":

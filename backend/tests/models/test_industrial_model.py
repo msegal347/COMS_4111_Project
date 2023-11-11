@@ -1,8 +1,8 @@
 import json
 from unittest.mock import patch
 from flask import Flask
-from app import create_app  # Adjust the import according to your directory structure
-from app.models.industrial_model import IndustrialApplication  # Adjust the import according to your directory structure
+from app import create_app  
+from app.models.industrial_model import IndustrialApplication  
 
 # Initialize the Flask application for testing
 app = create_app()
@@ -30,7 +30,6 @@ def test_get_industrial_applications():
                 response = client.get('/api/industrial/')
                 assert response.status_code == 200
                 data = json.loads(response.data.decode())
-                # Ensure this matches the actual serialization format
                 assert data == [
                     {"application_id": 1, "material_id": 1, "application_name": "Insulation", "industry": "Construction"},
                     {"application_id": 2, "material_id": 2, "application_name": "Conductor", "industry": "Electronics"}
@@ -45,6 +44,5 @@ def test_get_industrial_application():
                 response = client.get('/api/industrial/1')
                 assert response.status_code == 200
                 data = json.loads(response.data.decode())
-                # Ensure this matches the actual serialization format
                 assert data == {"application_id": 1, "material_id": 1, "application_name": "Insulation", "industry": "Construction"}
 

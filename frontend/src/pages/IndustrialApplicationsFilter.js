@@ -1,7 +1,6 @@
 import React from 'react';
 
 const IndustrialApplicationsFilter = ({ onFilterChange }) => {
-  // Example filter: Industry name
   return (
     <div>
       <input

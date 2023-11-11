@@ -1,7 +1,7 @@
 import json
 from unittest.mock import patch
-from app import create_app  # Adjust the import according to your directory structure
-from app.models.material_model import Material  # Adjust the import according to your directory structure
+from app import create_app  
+from app.models.material_model import Material
 from app.services.material_service import get_all_materials, get_material_by_id
 
 # Initialize the Flask application for testing

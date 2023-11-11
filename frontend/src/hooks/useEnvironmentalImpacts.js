@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getEnvironmentalImpacts } from '../services/api'; // Ensure you have this function in your api.js
+import { getEnvironmentalImpacts } from '../services/api';
 
 const useEnvironment = () => {
   const [environmentalImpacts, setEnvironmentalImpacts] = useState([]);

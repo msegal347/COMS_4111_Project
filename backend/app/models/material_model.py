@@ -2,9 +2,8 @@ from app.extensions import db
 from sqlalchemy import ForeignKey, CheckConstraint
 
 class Material(db.Model):
-    __tablename__ = 'material'  # Make sure this is lowercase to match your actual table name in PostgreSQL
+    __tablename__ = 'material' 
 
-    # Change all the column names to lowercase as well
     materialid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     materialname = db.Column(db.String(255), nullable=False, unique=True)
     generalcategoryid = db.Column(db.Integer, ForeignKey('generalcategories.generalcategoryid'))
@@ -23,7 +22,6 @@ class Material(db.Model):
     conductivity = db.Column(db.Float, CheckConstraint('conductivity >= 0'))
     resistivity = db.Column(db.Float, CheckConstraint('resistivity >= 0'))
 
-    # Update the constructor to use lowercase as well
     def __init__(self, materialname, generalcategoryid, elementalcomposition=None, 
                  molecularweight=None, tensilestrength=None, ductility=None, hardness=None,
                  thermalconductivity=None, heatcapacity=None, meltingpoint=None, refractiveindex=None,

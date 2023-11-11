@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, abort
-from app.extensions import db  # Make sure this import points to the initialized db instance from SQLAlchemy
+from app.extensions import db  
 from app.models.company_model import Company 
 
 company_bp = Blueprint("company", __name__, url_prefix="/api/company")
@@ -27,7 +27,6 @@ def get_company(company_id):
     try:
         company_query = db.session.query(Company).filter_by(companyid=company_id).first()
         if company_query:
-            # Use lowercase attributes as defined in the model
             company = {
                 "id": company_query.companyid, 
                 "name": company_query.companyname, 

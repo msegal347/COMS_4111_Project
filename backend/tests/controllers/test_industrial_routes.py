@@ -20,13 +20,12 @@ def create_app():
 app = create_app()
 
 # Ensure all models are imported here
-from app.models.general_categories_model import GeneralCategory  # Import the GeneralCategory model
-from app.models.material_model import Material  # Make sure this import is correct
+from app.models.general_categories_model import GeneralCategory  
+from app.models.material_model import Material 
 from app.models.industrial_model import IndustrialApplication
 
-# Correct the Material model's ForeignKey reference before setting up the test client
-Material.generalcategoryid.property.columns[0].foreign_keys.clear()  # Clear existing foreign key
-Material.generalcategoryid = db.Column(db.Integer, db.ForeignKey('generalcategories.GeneralCategoryID'))  # Set correct foreign key
+Material.generalcategoryid.property.columns[0].foreign_keys.clear()  
+Material.generalcategoryid = db.Column(db.Integer, db.ForeignKey('generalcategories.GeneralCategoryID')) 
 
 # Fixture for creating the test client and setting up the database
 @pytest.fixture(scope="module")
@@ -61,10 +60,10 @@ def client():
         db.session.add(application_b)
         db.session.commit()
 
-        yield app.test_client()  # Provides the test client for the tests
+        yield app.test_client()
 
-        db.session.remove()  # Close the session to avoid hanging transactions
-        db.drop_all()  # Clean up the tables after tests
+        db.session.remove() 
+        db.drop_all()  
 
 @event.listens_for(Engine, "before_cursor_execute", retval=True)
 def receive_before_cursor_execute(conn, cursor, statement, params, context, executemany):

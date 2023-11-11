@@ -7,8 +7,7 @@ const SoldByPage = () => {
   const { soldByRelations, loading, error } = useSoldBy();
 
   const handleFilterChange = (filterName, value) => {
-    // Update your filters state logic here
-    console.log(filterName, value); // Placeholder for actual filter logic
+    console.log(filterName, value);
   };
 
   if (loading) return <div>Loading...</div>;
