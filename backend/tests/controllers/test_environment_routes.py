@@ -47,6 +47,6 @@ def test_get_environmental_impact_route_found(client, sample_environmental_impac
 # Test for GET a single environmental impact by ID route when the impact is not found
 def test_get_environmental_impact_route_not_found(client):
     with patch('app.models.environmental_model.EnvironmentalImpact.query') as mock_query:
-        mock_query.return_value.filter_by.return_value.first.return_value = None  # Assume NotFound exception is imported from flask
+        mock_query.return_value.filter_by.return_value.first.return_value = None 
         response = client.get('/api/environmental/999')
         assert response.status_code == 500

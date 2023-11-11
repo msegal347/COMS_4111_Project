@@ -2,13 +2,10 @@ import pytest
 from unittest.mock import patch
 from app.services.industrial_service import (
     get_all_applications,
-    get_application_by_id,
-    create_application,
-    update_application,
-    delete_application
+    get_application_by_id
 )
 from app.models.industrial_model import IndustrialApplication
-from app.app import create_app
+from app import create_app
 
 @pytest.fixture
 def app():
@@ -55,41 +52,3 @@ def test_get_application_by_id_not_found(app, sample_applications):
             application = get_application_by_id(3)
             assert application is None
 
-def test_create_application(app, sample_applications):
-    data = {"MaterialID": 3, "Industry": "Industry C", "ApplicationName": "Application C"}
-    with app.app_context():
-        with patch('app.extensions.db.session.add'), patch('app.extensions.db.session.commit'):
-            new_application = create_application(data)
-            assert new_application is not None
-            assert new_application.MaterialID == data['MaterialID']
-            assert new_application.Industry == data['Industry']
-            assert new_application.ApplicationName == data['ApplicationName']
-
-
-def test_update_application_found(app, sample_applications):
-    data = {"ApplicationName": "Application Updated"}
-    with app.app_context():
-        with patch('app.models.industrial_model.IndustrialApplication.query') as mock_query, \
-             patch('app.extensions.db.session.commit'):
-            mock_query.get.return_value = sample_applications[0]
-            updated_application = update_application(1, data)
-            assert updated_application is not None
-            assert updated_application.ApplicationName == data['ApplicationName']
-
-def test_delete_application_found(app, sample_applications):
-    with app.app_context():
-        with patch('app.models.industrial_model.IndustrialApplication.query') as mock_query, \
-             patch('app.extensions.db.session.delete'), \
-             patch('app.extensions.db.session.commit'):
-            mock_query.get.return_value = sample_applications[0]
-            result = delete_application(1)
-            assert result is None
-
-def test_delete_application_not_found(app, sample_applications):
-    with app.app_context():
-        with patch('app.models.industrial_model.IndustrialApplication.query') as mock_query, \
-             patch('app.extensions.db.session.delete'), \
-             patch('app.extensions.db.session.commit'):
-            mock_query.get.return_value = None
-            result = delete_application(3)
-            assert result is None

@@ -1,7 +1,7 @@
 from app.extensions import db
 
 # Association table for Materials and EnvironmentalImpacts
-HasEffectOnEnvironment = db.Table('HasEffectOnEnvironment',
-    db.Column('MaterialID', db.Integer, db.ForeignKey('Material.MaterialID'), primary_key=True),
-    db.Column('ImpactID', db.Integer, db.ForeignKey('EnvironmentalImpact.ImpactID'), primary_key=True)
+HasEffectOnEnvironment = db.Table('haseffectonenvironment',
+    db.Column('materialid', db.Integer, db.ForeignKey('material.materialid'), primary_key=True),
+    db.Column('impactid', db.Integer, db.ForeignKey('environmentalimpact.impactid'), primary_key=True)
 )

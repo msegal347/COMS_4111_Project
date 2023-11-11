@@ -1,6 +1,6 @@
 import json
 from unittest.mock import patch
-from app.app import create_app 
+from app import create_app 
 from app.models.general_categories_model import GeneralCategory 
 
 # Initialize the Flask application for testing

@@ -1,19 +1,21 @@
 import json
 from unittest.mock import patch
-from app.app import create_app  # Adjust the import according to your directory structure
+from app import create_app  # Adjust the import according to your directory structure
 from app.models.material_model import Material  # Adjust the import according to your directory structure
+from app.services.material_service import get_all_materials, get_material_by_id
 
 # Initialize the Flask application for testing
 app = create_app()
 app.config['TESTING'] = True
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
 
 # Sample material data
 sample_materials = [
-    Material(MaterialName="Material A", GeneralCategoryID=1),
-    Material(MaterialName="Material B", GeneralCategoryID=2)
+    Material(materialname="Material A", generalcategoryid=1),
+    Material(materialname="Material B", generalcategoryid=2)
 ]
-sample_materials[0].MaterialID = 1
-sample_materials[1].MaterialID = 2
+sample_materials[0].materialid = 1
+sample_materials[1].materialid = 2
 
 # Mock query responses
 mock_all_query = sample_materials

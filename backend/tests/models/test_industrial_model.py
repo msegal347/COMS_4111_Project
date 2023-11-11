@@ -1,7 +1,7 @@
 import json
 from unittest.mock import patch
 from flask import Flask
-from app.app import create_app  # Adjust the import according to your directory structure
+from app import create_app  # Adjust the import according to your directory structure
 from app.models.industrial_model import IndustrialApplication  # Adjust the import according to your directory structure
 
 # Initialize the Flask application for testing

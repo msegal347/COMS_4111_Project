@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css'; 
-import App from './app'; 
+import './index.css';
+import App from './app';
 import ErrorBoundary from './ErrorBoundary';
-
-
 
 ReactDOM.render(
   <React.StrictMode>

@@ -2,39 +2,40 @@ from app.extensions import db
 from sqlalchemy import CheckConstraint
 
 class EnvironmentalImpact(db.Model):
-    __tablename__ = 'Environmental_Impact'
+    __tablename__ = 'environmentalimpact'
 
-    ImpactID = db.Column(db.Integer, primary_key=True)
-    MaterialID = db.Column(db.Integer, db.ForeignKey('Material.MaterialID'), nullable=False)
-    ToxicityLevel = db.Column(db.Float, nullable=False, default=0.0)
-    Recyclability = db.Column(db.Boolean, nullable=False)
-    CarbonFootprint = db.Column(db.Float, nullable=False, default=0.0)
+    # Column names should be in lowercase to match PostgreSQL's default behavior.
+    impactid = db.Column(db.Integer, primary_key=True)
+    materialid = db.Column(db.Integer, db.ForeignKey('material.materialid'), nullable=False)
+    toxicitylevel = db.Column(db.Float, nullable=False, default=0.0)
+    recyclability = db.Column(db.Boolean, nullable=False)
+    carbonfootprint = db.Column(db.Float, nullable=False, default=0.0)
 
     __table_args__ = (
-        CheckConstraint('ToxicityLevel >= 0 AND ToxicityLevel <= 10'),
-        CheckConstraint('CarbonFootprint >= 0'),
+        CheckConstraint('toxicitylevel >= 0 AND toxicitylevel <= 10'),
+        CheckConstraint('carbonfootprint >= 0'),
     )
 
-    def __init__(self, MaterialID, ToxicityLevel, Recyclability, CarbonFootprint):
-        assert 0 <= ToxicityLevel <= 10, "ToxicityLevel must be between 0 and 10."
-        assert CarbonFootprint >= 0, "CarbonFootprint must be non-negative."
+    def __init__(self, materialid, toxicitylevel, recyclability, carbonfootprint):
+        assert 0 <= toxicitylevel <= 10, "ToxicityLevel must be between 0 and 10."
+        assert carbonfootprint >= 0, "CarbonFootprint must be non-negative."
         
-        self.MaterialID = MaterialID
-        self.ToxicityLevel = ToxicityLevel
-        self.Recyclability = Recyclability
-        self.CarbonFootprint = CarbonFootprint
+        self.materialid = materialid
+        self.toxicitylevel = toxicitylevel
+        self.recyclability = recyclability
+        self.carbonfootprint = carbonfootprint
 
     def to_dict(self):
         """
         Serializes the object to a dictionary.
         """
         return {
-            'impact_id': self.ImpactID,
-            'material_id': self.MaterialID,
-            'toxicity_level': self.ToxicityLevel,
-            'recyclability': self.Recyclability,
-            'carbon_footprint': self.CarbonFootprint
+            'impactid': self.impactid,
+            'materialid': self.materialid,
+            'toxicitylevel': self.toxicitylevel,
+            'recyclability': self.recyclability,
+            'carbonfootprint': self.carbonfootprint
         }
 
     def __repr__(self):
-        return f'<Environmental_Impact {self.ImpactID}: MaterialID {self.MaterialID}>'
+        return f'<EnvironmentalImpact {self.impactid}: MaterialID {self.materialid}>'

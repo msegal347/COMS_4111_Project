@@ -2,10 +2,7 @@ from flask import Blueprint, jsonify, request, abort
 from app import db
 from app.services.industrial_service import (
     get_all_applications,
-    get_application_by_id,
-    create_application,
-    update_application,
-    delete_application
+    get_application_by_id
 )
 import logging
 
@@ -34,36 +31,4 @@ def get_application(application_id):
             abort(404, description="Industrial application not found")
     except Exception as e:
         logger.error(f"Error fetching industrial application with id {application_id}: {e}")
-        abort(500, description="Internal Server Error")
-
-@industrial_bp.route('/', methods=['POST'])
-def create_new_application():
-    data = request.get_json()
-    try:
-        new_application = create_application(data)
-        return jsonify(new_application.to_dict()), 201
-    except Exception as e:
-        logger.error(f"Error creating new industrial application: {e}")
-        abort(500, description="Internal Server Error")
-
-@industrial_bp.route('/<int:application_id>', methods=['PUT'])
-def update_existing_application(application_id):
-    data = request.get_json()
-    try:
-        application = update_application(application_id, data)
-        if application is not None:
-            return jsonify(application.to_dict()), 200
-        else:
-            abort(404, description="Industrial application not found")
-    except Exception as e:
-        logger.error(f"Error updating industrial application with id {application_id}: {e}")
-        abort(500, description="Internal Server Error")
-
-@industrial_bp.route('/<int:application_id>', methods=['DELETE'])
-def delete_existing_application(application_id):
-    try:
-        delete_application(application_id)
-        return jsonify({}), 204
-    except Exception as e:
-        logger.error(f"Error deleting industrial application with id {application_id}: {e}")
         abort(500, description="Internal Server Error")

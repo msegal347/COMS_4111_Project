@@ -1,17 +1,29 @@
 from app.extensions import db 
 
 class Company(db.Model):
-    __tablename__ = 'Company'
+    __tablename__ = 'company'
 
-    CompanyID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    CompanyName = db.Column(db.String(255), nullable=False, unique=True)
-    Location = db.Column(db.String(255), nullable=False)
-    Subsidiary = db.Column(db.String(255))
+    # Column names should be in lowercase to match PostgreSQL's default behavior.
+    companyid = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    companyname = db.Column(db.String(255), nullable=False, unique=True)
+    location = db.Column(db.String(255), nullable=False)
+    subsidiary = db.Column(db.String(255))
 
-    def __init__(self, CompanyName, Location, Subsidiary=None):
-        self.CompanyName = CompanyName
-        self.Location = Location
-        self.Subsidiary = Subsidiary
+    def __init__(self, companyname, location, subsidiary=None):
+        self.companyname = companyname
+        self.location = location
+        self.subsidiary = subsidiary
+
+    def to_dict(self):
+        """
+        Serializes the object to a dictionary.
+        """
+        return {
+            'companyid': self.companyid,
+            'companyname': self.companyname,
+            'location': self.location,
+            'subsidiary': self.subsidiary
+        }
 
     def __repr__(self):
-        return f'<Company {self.CompanyID}: {self.CompanyName}, {self.Location}, {self.Subsidiary}>'
+        return f'<Company {self.companyid}: {self.companyname}, {self.location}, {self.subsidiary}>'

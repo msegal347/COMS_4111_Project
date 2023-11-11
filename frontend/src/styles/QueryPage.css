@@ -1,0 +1,40 @@
+/* QueryPage.css */
+
+.query-page {
+    margin: 20px;
+  }
+  
+  .query-page h1 {
+    text-align: center;
+  }
+  
+  fieldset {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  legend {
+    padding: 0 10px;
+    font-weight: bold;
+  }
+  
+  label {
+    display: block;
+    margin: 5px 0;
+  }
+  
+  .results {
+    margin-top: 20px;
+  }
+  
+  .results-display {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+  }
+  
+  .error {
+    color: #ff0000;
+  }
+  
