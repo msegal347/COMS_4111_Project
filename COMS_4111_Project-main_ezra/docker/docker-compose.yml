@@ -1,0 +1,18 @@
+version: '3.1'
+
+services:
+  db:
+    build: .
+    image: postgres:15 
+    environment:
+      POSTGRES_USER: materials
+      POSTGRES_PASSWORD: materials
+      POSTGRES_DB: materialsDB
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
