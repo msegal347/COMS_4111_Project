@@ -1,7 +1,0 @@
-[tool.black]
-line-length = 88
-target-version = ['py39']
-
-[tool.pytest.ini_options]
-addopts = "--verbose --cov=app"
-testpaths = "tests/"
