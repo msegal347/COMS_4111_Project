@@ -10,3 +10,4 @@
 /backend/tests/models/__pycache__/
 /backend/tests/services/__pycache__/
 /backend/tests/controllers/__pycache__/
+.DS_Store
