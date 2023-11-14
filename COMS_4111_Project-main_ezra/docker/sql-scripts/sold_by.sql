@@ -72,3 +72,4 @@ INSERT INTO SoldBy(BasePrice,MaterialID,CompanyID,Currency) VALUES (30.0,78,28,'
 INSERT INTO SoldBy(BasePrice,MaterialID,CompanyID,Currency) VALUES (2.0,35,25,'USD');
 INSERT INTO SoldBy(BasePrice,MaterialID,CompanyID,Currency) VALUES (7.5,49,26,'USD');
 INSERT INTO SoldBy(BasePrice,MaterialID,CompanyID,Currency) VALUES (4.0,76,27,'USD');
+INSERT INTO SoldBy(BasePrice,MaterialID,CompanyID,Currency) VALUES (37.0,1,1,'USD');

@@ -26,21 +26,21 @@ const MaterialsTable = ({ materials }) => {
       </thead>
       <tbody>
         {materials.map(material => (
-          <tr key={material.materialid}>
-            <td>{material.materialid}</td>
-            <td>{material.materialname}</td>
-            <td>{material.generalcategoryid}</td>
-            <td>{material.createdat}</td>
-            <td>{material.updatedat}</td>
-            <td>{material.elementalcomposition}</td>
-            <td>{material.molecularweight}</td>
-            <td>{material.tensilestrength}</td>
+          <tr key={material.id}>
+            <td>{material.id}</td>
+            <td>{material.name}</td>
+            <td>{material.general_category_id}</td>
+            <td>{material.created_at}</td>
+            <td>{material.updated_at}</td>
+            <td>{material.elemental_composition}</td>
+            <td>{material.molecular_weight}</td>
+            <td>{material.tensile_strength}</td>
             <td>{material.ductility}</td>
             <td>{material.hardness}</td>
-            <td>{material.thermalconductivity}</td>
-            <td>{material.heatcapacity}</td>
-            <td>{material.meltingpoint}</td>
-            <td>{material.refractiveindex}</td>
+            <td>{material.thermal_conductivity}</td>
+            <td>{material.heat_capacity}</td>
+            <td>{material.melting_point}</td>
+            <td>{material.refractive_index}</td>
             <td>{material.absorbance}</td>
             <td>{material.conductivity}</td>
             <td>{material.resistivity}</td>

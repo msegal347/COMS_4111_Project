@@ -14,10 +14,10 @@ const IndustrialApplicationsTable = ({ applications }) => {
       </thead>
       <tbody>
         {applications.map(app => (
-          <tr key={app.application_id}>
-            <td>{app.application_id}</td>
-            <td>{app.material_id}</td>
-            <td>{app.application_name}</td>
+          <tr key={app.applicationid}>
+            <td>{app.applicationid}</td>
+            <td>{app.materialid}</td>
+            <td>{app.applicationname}</td>
             <td>{app.industry}</td>
             {/* Add more cells as needed */}
           </tr>

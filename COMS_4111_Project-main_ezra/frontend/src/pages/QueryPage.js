@@ -7,6 +7,8 @@ const QueryPage = () => {
     category: {},
     material: {},
     company: {},
+    company_location: {},
+    industry: {},
     sold_by: {},
     environmental: {},
   });
@@ -79,7 +81,9 @@ const QueryPage = () => {
       <form onSubmit={handleSubmit}>
         <fieldset>
           <legend>Materials</legend>
-          {renderTextInput('category', 'categoryName')}
+          {/*first argument matches constant at the top*/}
+          {/*second argument is the name found in category_routes */}
+          {renderTextInput('category', 'categoryName')} 
           {/* Repeat for other filters as needed */}
         </fieldset>
         <fieldset>
@@ -90,6 +94,16 @@ const QueryPage = () => {
         <fieldset>
           <legend>Companies</legend>
           {renderTextInput('company', 'companyname')}
+          {/* Repeat for other filters as needed */}
+        </fieldset>
+        <fieldset>
+          <legend>Companies</legend>
+          {renderTextInput('company_location', 'location')}
+          {/* Repeat for other filters as needed */}
+        </fieldset>
+        <fieldset>
+          <legend>Industry</legend>
+          {renderTextInput('industry', 'industry')}
           {/* Repeat for other filters as needed */}
         </fieldset>
         <fieldset>
@@ -123,6 +137,12 @@ const QueryPage = () => {
                 </div>
                 <div>
                   <strong>Company Name:</strong> {result.companyname}
+                </div>
+                <div>
+                  <strong>Company Location:</strong> {result.location}
+                </div>
+                <div>
+                  <strong>Industry:</strong> {result.industry}
                 </div>
                 <div>
                   <strong>Recyclable:</strong> {result.recyclability ? 'Yes' : 'No'}
