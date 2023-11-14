@@ -15,9 +15,9 @@ const SoldByTable = ({ soldByRelations }) => {
       <tbody>
         {soldByRelations.map(relation => (
           <tr key={`${relation.materialId}-${relation.companyId}`}>
-            <td>{relation.materialId}</td>
-            <td>{relation.companyId}</td>
-            <td>{relation.basePrice}</td>
+            <td>{relation.materialid}</td>
+            <td>{relation.companyid}</td>
+            <td>{relation.baseprice}</td>
             <td>{relation.currency}</td>
             {/* Add more cells as needed */}
           </tr>
