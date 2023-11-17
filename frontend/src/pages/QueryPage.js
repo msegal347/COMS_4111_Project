@@ -7,6 +7,8 @@ const QueryPage = () => {
   const [companies, setCompanies] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedCompany, setSelectedCompany] = useState('');
+  const [industrialApplications, setIndustrialApplications] = useState([]);
+  const [selectedApplication, setSelectedApplication] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,12 +16,14 @@ const QueryPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [generalResponse, companyResponse] = await Promise.all([
+        const [generalResponse, companyResponse, applicationResponse] = await Promise.all([
           axios.get('http://localhost:5000/api/general_categories'),
           axios.get('http://localhost:5000/api/company'),
+          axios.get('http://localhost:5000/api/industrial'),
         ]);
         setGeneralCategories(generalResponse.data);
         setCompanies(companyResponse.data);
+        setIndustrialApplications(applicationResponse.data);
       } catch (err) {
         setError('Failed to fetch data: ' + err.message);
         console.error('Failed to fetch data:', err);
@@ -39,6 +43,10 @@ const QueryPage = () => {
     setSelectedCompany(event.target.value);
   };
 
+  const handleApplicationChange = event => {
+    setSelectedApplication(event.target.value);
+  };
+
   const handleSubmit = async event => {
     event.preventDefault();
     setLoading(true);
@@ -48,6 +56,7 @@ const QueryPage = () => {
       const filterData = {
         category: selectedCategory,
         company: selectedCompany,
+        industrial: selectedApplication,
       };
       const response = await axios.post('http://localhost:5000/api/query', filterData);
       setResults(response.data);
@@ -60,50 +69,55 @@ const QueryPage = () => {
   };
 
   return (
-    <div className="query-page">
-      <h1>Custom Query Builder</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="filters-container">
-          <fieldset className="filter-section">
+    <div>
+      <div className="query-page">
+        <h1>Materials DB Custom Query</h1>
+        <form onSubmit={handleSubmit} className="query-form">
+          <fieldset>
             <legend>Material General Category</legend>
-            {generalCategories.map(category => (
-              <div key={category.generalcategoryid} className="checkbox-container">
-                <label>
-                  <input
-                    type="radio"
-                    name="category"
-                    value={category.categoryname}
-                    checked={selectedCategory === category.categoryname}
-                    onChange={handleCategoryChange}
-                  />
+            <select name="category" onChange={handleCategoryChange} value={selectedCategory}>
+              <option value="">Select a Category</option>
+              {generalCategories.map(category => (
+                <option key={category.generalcategoryid} value={category.categoryname}>
                   {category.categoryname}
-                </label>
-              </div>
-            ))}
+                </option>
+              ))}
+            </select>
           </fieldset>
 
-          <fieldset className="filter-section">
+          <fieldset>
             <legend>Companies</legend>
-            {companies.map(company => (
-              <div key={company.id} className="checkbox-container">
-                <label>
-                  <input
-                    type="radio"
-                    name="company"
-                    value={company.name}
-                    checked={selectedCompany === company.name}
-                    onChange={handleCompanyChange}
-                  />
+            <select name="company" onChange={handleCompanyChange} value={selectedCompany}>
+              <option value="">Select a Company</option>
+              {companies.map(company => (
+                <option key={company.id} value={company.name}>
                   {company.name}
-                </label>
-              </div>
-            ))}
+                </option>
+              ))}
+            </select>
           </fieldset>
-        </div>
-        <button type="submit" disabled={loading}>
-          {loading ? 'Loading...' : 'Run Query'}
-        </button>
-      </form>
+
+          <fieldset>
+            <legend>Industrial Applications</legend>
+            <select
+              name="industrial"
+              onChange={handleApplicationChange}
+              value={selectedApplication}
+            >
+              <option value="">Select an Application</option>
+              {industrialApplications.map(app => (
+                <option key={app.applicationid} value={app.applicationname}>
+                  {app.applicationname}
+                </option>
+              ))}
+            </select>
+          </fieldset>
+
+          <button type="submit" disabled={loading}>
+            {loading ? 'Loading...' : 'Run Query'}
+          </button>
+        </form>
+      </div>
       <div className="results-display">
         {error && <div className="error">Error: {error}</div>}
         <h2>Results:</h2>
@@ -123,6 +137,9 @@ const QueryPage = () => {
                   <div>
                     <strong>Company Name:</strong> {result.companyname}
                   </div>
+                  <div>
+                    <strong>Industrial Application:</strong> {result.applicationname}
+                  </div>
                 </div>
               ))
             ) : (
@@ -134,5 +151,4 @@ const QueryPage = () => {
     </div>
   );
 };
-
 export default QueryPage;

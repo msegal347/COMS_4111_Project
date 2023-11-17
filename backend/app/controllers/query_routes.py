@@ -31,7 +31,8 @@ def run_query():
         query = db.session.query(
             Material.materialname,
             GeneralCategory.categoryname,
-            Company.companyname
+            Company.companyname,
+            IndustrialApplication.applicationname
         ).join(
             GeneralCategory,
             Material.generalcategoryid == GeneralCategory.generalcategoryid
@@ -41,17 +42,26 @@ def run_query():
         ).outerjoin(
             Company,
             SoldBy.companyid == Company.companyid
+        ).outerjoin(
+            IndustrialApplication,
+            Material.materialid == IndustrialApplication.materialid
         )
 
         # Apply category filter
         category_filter = query_data.get('category')
         if category_filter:
-            query = query.filter(GeneralCategory.categoryname.in_([category_filter]))
+            query = query.filter(GeneralCategory.categoryname == category_filter)
 
         # Apply company filter
         company_filter = query_data.get('company')
         if company_filter:
             query = query.filter(Company.companyname.ilike(f"%{company_filter}%"))
+
+        # Apply industrial application filter
+        application_filter = query_data.get('industrial')
+        print(f"application_filter: {application_filter}")
+        if application_filter:
+            query = query.filter(IndustrialApplication.applicationname.ilike(f"%{application_filter}%"))
 
         # Debug: Print the query statement to check if it's correct
         print(query.statement.compile(compile_kwargs={"literal_binds": True}))
@@ -64,7 +74,8 @@ def run_query():
             {
                 'categoryname': result.categoryname,
                 'materialname': result.materialname,
-                'companyname': result.companyname or 'N/A' 
+                'companyname': result.companyname or 'N/A',
+                'applicationname': result.applicationname or 'N/A'
             }
             for result in results
         ]
