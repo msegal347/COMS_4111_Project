@@ -29,7 +29,7 @@ const MaterialsTable = ({ materials }) => {
           <tr key={material.id}>
             <td>{material.id}</td>
             <td>{material.name}</td>
-            <td>{material.general_category_id}</td>
+            <td>{material.general_category_name}</td>
             <td>{material.created_at}</td>
             <td>{material.updated_at}</td>
             <td>{material.elemental_composition}</td>

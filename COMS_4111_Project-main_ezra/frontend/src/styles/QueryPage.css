@@ -55,3 +55,31 @@
     color: #ff0000;
   }
   
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  .checkbox-container input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  .filters-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .filter-section {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .filter-section:last-child {
+    margin-right: 0;
+  }
+  
+  .checkbox-container {
+    margin-bottom: 10px;
+  }
