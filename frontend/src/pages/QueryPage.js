@@ -9,6 +9,9 @@ const QueryPage = () => {
   const [selectedCompany, setSelectedCompany] = useState('');
   const [industrialApplications, setIndustrialApplications] = useState([]);
   const [selectedApplication, setSelectedApplication] = useState('');
+  const [isRecyclable, setIsRecyclable] = useState(false);
+  const [hasToxicity, setHasToxicity] = useState(false);
+  const [hasCarbonFootprint, setHasCarbonFootprint] = useState(false);
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -47,6 +50,18 @@ const QueryPage = () => {
     setSelectedApplication(event.target.value);
   };
 
+  const handleRecyclabilityChange = () => {
+    setIsRecyclable(!isRecyclable);
+  };
+
+  const handleToxicityChange = () => {
+    setHasToxicity(!hasToxicity);
+  };
+
+  const handleCarbonFootprintChange = () => {
+    setHasCarbonFootprint(!hasCarbonFootprint);
+  };
+
   const handleSubmit = async event => {
     event.preventDefault();
     setLoading(true);
@@ -57,6 +72,11 @@ const QueryPage = () => {
         category: selectedCategory,
         company: selectedCompany,
         industrial: selectedApplication,
+        environmental: {
+          toxicityLevel: hasToxicity,
+          recyclability: isRecyclable,
+          carbonFootprint: hasCarbonFootprint,
+        },
       };
       const response = await axios.post('http://localhost:5000/api/query', filterData);
       setResults(response.data);
@@ -111,6 +131,26 @@ const QueryPage = () => {
                 </option>
               ))}
             </select>
+          </fieldset>
+
+          <fieldset>
+            <legend>Environmental Impact</legend>
+            <label>
+              Recyclable:
+              <input type="checkbox" checked={isRecyclable} onChange={handleRecyclabilityChange} />
+            </label>
+            <label>
+              Toxic:
+              <input type="checkbox" checked={hasToxicity} onChange={handleToxicityChange} />
+            </label>
+            <label>
+              Carbon Impact:
+              <input
+                type="checkbox"
+                checked={hasCarbonFootprint}
+                onChange={handleCarbonFootprintChange}
+              />
+            </label>
           </fieldset>
 
           <button type="submit" disabled={loading}>
