@@ -63,15 +63,6 @@ def run_query():
         if application_filter:
             query = query.filter(IndustrialApplication.applicationname.ilike(f"%{application_filter}%"))
 
-        environmental_filter = query_data.get('environmental', {})
-        if environmental_filter:
-            if 'toxicityLevel' in environmental_filter and environmental_filter['toxicityLevel']:
-                query = query.filter(EnvironmentalImpact.toxicitylevel > float(environmental_filter['toxicityLevel']))
-            if 'recyclability' in environmental_filter:
-                query = query.filter(EnvironmentalImpact.recyclability == (environmental_filter['recyclability'] in ['true', 'True', True]))
-            if 'carbonFootprint' in environmental_filter and environmental_filter['carbonFootprint']:
-                query = query.filter(EnvironmentalImpact.carbonfootprint > float(environmental_filter['carbonFootprint']))
-
         # Debug: Print the query statement to check if it's correct
         print(query.statement.compile(compile_kwargs={"literal_binds": True}))
 

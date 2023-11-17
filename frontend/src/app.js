@@ -22,9 +22,7 @@ function App() {
         <Route path="/companies" element={<CompaniesPage />} />
         <Route path="/sold-by" element={<SoldByPage />} />
         <Route path="/environment" element={<EnvironmentPage />} />{' '}
-        {/* Add this line for environment */}
-        <Route path="/" element={<MaterialsPage />} />
-        {/* Other routes */}
+        <Route path="/" element={<QueryPage />} />
       </Routes>
     </Router>
   );

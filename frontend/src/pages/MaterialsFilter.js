@@ -1,31 +1,53 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const MaterialFilter = ({ onFilterChange }) => {
-  // Temporary hardcoded categories
-  const categories = [
-    { id: '1', name: 'Category 1' },
-    { id: '2', name: 'Category 2' },
-    { id: '3', name: 'Category 3' },
-  ];
+  const [categories, setCategories] = useState([]);
+  const [materialName, setMaterialName] = useState('');
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/general_categories');
+        setCategories(response.data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+        // Handle errors as needed
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  const handleMaterialNameChange = event => {
+    const value = event.target.value;
+    setMaterialName(value);
+    onFilterChange('materialname', value);
+  };
+
+  const handleCategoryChange = event => {
+    const value = event.target.value;
+    onFilterChange('generalcategoryid', value);
+  };
 
   return (
     <div>
       <input
         type="text"
         placeholder="Material Name"
-        onChange={e => onFilterChange('materialname', e.target.value)}
+        value={materialName}
+        onChange={handleMaterialNameChange}
       />
-      <select onChange={e => onFilterChange('generalcategoryid', e.target.value)} defaultValue="">
+      <select onChange={handleCategoryChange} defaultValue="">
         <option value="" disabled>
           Select Category
         </option>
         {categories.map(category => (
-          <option key={category.id} value={category.id}>
-            {category.name}
+          <option key={category.generalcategoryid} value={category.generalcategoryid}>
+            {category.categoryname}
           </option>
         ))}
       </select>
-      {/* ... other input fields */}
     </div>
   );
 };

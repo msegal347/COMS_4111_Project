@@ -8,8 +8,6 @@ const MaterialsTable = ({ materials }) => {
           <th>ID</th>
           <th>Name</th>
           <th>Category ID</th>
-          <th>Created At</th>
-          <th>Updated At</th>
           <th>Elemental Composition</th>
           <th>Molecular Weight</th>
           <th>Tensile Strength</th>
@@ -22,6 +20,8 @@ const MaterialsTable = ({ materials }) => {
           <th>Absorbance</th>
           <th>Conductivity</th>
           <th>Resistivity</th>
+          <th>Created At</th>
+          <th>Updated At</th>
         </tr>
       </thead>
       <tbody>
@@ -30,8 +30,6 @@ const MaterialsTable = ({ materials }) => {
             <td>{material.id}</td>
             <td>{material.name}</td>
             <td>{material.general_category_id}</td>
-            <td>{material.created_at}</td>
-            <td>{material.updated_at}</td>
             <td>{material.elemental_composition}</td>
             <td>{material.molecular_weight}</td>
             <td>{material.tensile_strength}</td>
@@ -44,6 +42,8 @@ const MaterialsTable = ({ materials }) => {
             <td>{material.absorbance}</td>
             <td>{material.conductivity}</td>
             <td>{material.resistivity}</td>
+            <td>{material.created_at}</td>
+            <td>{material.updated_at}</td>
           </tr>
         ))}
       </tbody>
