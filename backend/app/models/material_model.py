@@ -25,6 +25,7 @@ class Material(db.Model):
         # Define the relationships
     sold_by_relation = db.relationship('SoldBy', backref='material', lazy=True)
     environmental_impact = db.relationship('EnvironmentalImpact', backref='material', uselist=False)
+    general_category = db.relationship('GeneralCategory', backref='materials')
 
     def __init__(self, materialname, generalcategoryid, elementalcomposition=None, 
                  molecularweight=None, tensilestrength=None, ductility=None, hardness=None,
