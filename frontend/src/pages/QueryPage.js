@@ -120,28 +120,32 @@ const QueryPage = () => {
       </div>
       <div className="results-display">
         {error && <div className="error">Error: {error}</div>}
-        <h2>Results:</h2>
+
         {loading ? (
           <p>Loading...</p>
         ) : (
           <div className="results-content">
             {results.length > 0 ? (
-              results.map((result, index) => (
-                <div key={index} className="result-item">
-                  <div>
-                    <strong>Category Name:</strong> {result.categoryname}
-                  </div>
-                  <div>
-                    <strong>Material Name:</strong> {result.materialname}
-                  </div>
-                  <div>
-                    <strong>Company Name:</strong> {result.companyname}
-                  </div>
-                  <div>
-                    <strong>Industrial Application:</strong> {result.applicationname}
-                  </div>
-                </div>
-              ))
+              <table>
+                <thead>
+                  <tr>
+                    <th>Material Name</th>
+                    <th>Category Name</th>
+                    <th>Company Name</th>
+                    <th>Application Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {results.map((result, index) => (
+                    <tr key={index}>
+                      <td>{result.materialname}</td>
+                      <td>{result.categoryname}</td>
+                      <td>{result.companyname}</td>
+                      <td>{result.applicationname}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             ) : (
               <div>No results found.</div>
             )}

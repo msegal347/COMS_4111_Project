@@ -10,7 +10,6 @@ const MaterialsTable = ({ materials }) => {
       <thead>
         <tr>
           <th>Name</th>
-          <th>Category ID</th>
           <th>Elemental Composition</th>
           <th>Molecular Weight</th>
           <th>Tensile Strength</th>
@@ -31,7 +30,6 @@ const MaterialsTable = ({ materials }) => {
         {materials.map((material, index) => (
           <tr key={material.id || index}>
             <td>{material.name}</td>
-            <td>{material.general_category_id}</td>
             <td>{material.elemental_composition}</td>
             <td>{material.molecular_weight}</td>
             <td>{material.tensile_strength}</td>
