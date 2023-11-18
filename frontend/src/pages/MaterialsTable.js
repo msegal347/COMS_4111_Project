@@ -1,11 +1,14 @@
 import React from 'react';
 
 const MaterialsTable = ({ materials }) => {
+  if (!materials.length) {
+    return <div>No materials found.</div>; // Handle the case where no materials are present
+  }
+
   return (
     <table>
       <thead>
         <tr>
-          <th>ID</th>
           <th>Name</th>
           <th>Category ID</th>
           <th>Elemental Composition</th>
@@ -25,9 +28,8 @@ const MaterialsTable = ({ materials }) => {
         </tr>
       </thead>
       <tbody>
-        {materials.map(material => (
-          <tr key={material.id}>
-            <td>{material.id}</td>
+        {materials.map((material, index) => (
+          <tr key={material.id || index}>
             <td>{material.name}</td>
             <td>{material.general_category_id}</td>
             <td>{material.elemental_composition}</td>
