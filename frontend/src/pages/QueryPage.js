@@ -12,9 +12,11 @@ const QueryPage = () => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [industrialApplicationsError, setIndustrialApplicationsError] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const [generalResponse, companyResponse, applicationResponse] = await Promise.all([
           axios.get('http://localhost:5000/api/general_categories'),
@@ -68,6 +70,21 @@ const QueryPage = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchIndustrialApplications = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/industrial');
+        setIndustrialApplications(response.data);
+        setIndustrialApplicationsError('');
+      } catch (err) {
+        setIndustrialApplicationsError('Failed to fetch industrial applications: ' + err.message);
+        console.error('Failed to fetch industrial applications:', err);
+      }
+    };
+
+    fetchIndustrialApplications();
+  }, []);
+
   return (
     <div>
       <div className="query-page">
@@ -106,11 +123,14 @@ const QueryPage = () => {
             >
               <option value="">Select an Application</option>
               {industrialApplications.map(app => (
-                <option key={app.applicationid} value={app.applicationname}>
-                  {app.applicationname}
+                <option key={app.id} value={app.application_name}>
+                  {app.application_name}
                 </option>
               ))}
             </select>
+            {industrialApplicationsError && (
+              <div className="error">{industrialApplicationsError}</div>
+            )}
           </fieldset>
 
           <button type="submit" disabled={loading}>
@@ -120,7 +140,6 @@ const QueryPage = () => {
       </div>
       <div className="results-display">
         {error && <div className="error">Error: {error}</div>}
-
         {loading ? (
           <p>Loading...</p>
         ) : (
@@ -137,7 +156,8 @@ const QueryPage = () => {
                 </thead>
                 <tbody>
                   {results.map((result, index) => (
-                    <tr key={index}>
+                    // The key here should be something unique from your result if possible
+                    <tr key={result.materialname + index}>
                       <td>{result.materialname}</td>
                       <td>{result.categoryname}</td>
                       <td>{result.companyname}</td>
@@ -155,4 +175,5 @@ const QueryPage = () => {
     </div>
   );
 };
+
 export default QueryPage;

@@ -9,6 +9,7 @@ const useMaterials = () => {
   const fetchMaterials = useCallback(async category => {
     setLoading(true);
     setError(null);
+    setMaterials([]);
     try {
       const queryString = category ? `category=${encodeURIComponent(category)}` : '';
       console.log(`Requesting materials with category: ${category}`); // Log the exact request
@@ -26,6 +27,7 @@ const useMaterials = () => {
   const fetchAllMaterials = useCallback(async () => {
     setLoading(true);
     setError(null);
+    setMaterials([]);
     try {
       const response = await axios.get('http://localhost:5000/api/material');
       setMaterials(response.data);
