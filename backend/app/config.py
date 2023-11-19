@@ -5,10 +5,17 @@ class Config(object):
     FLASK_DEBUG = bool(os.environ.get("FLASK_DEBUG", False))
 
     # PostgreSQL settings
-    POSTGRES_USER = os.environ.get("POSTGRES_USER", "materials")
-    POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "materials")
-    POSTGRES_DB = os.environ.get("POSTGRES_DB", "materialsDB")
-    POSTGRES_HOST = os.environ.get("POSTGRES_HOST", "localhost")
+    #POSTGRES_USER = os.environ.get("POSTGRES_USER", "materials")
+    #POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "materials")
+    #POSTGRES_DB = os.environ.get("POSTGRES_DB", "materialsDB")
+    #POSTGRES_HOST = os.environ.get("POSTGRES_HOST", "localhost")
+    #POSTGRES_PORT = os.environ.get("POSTGRES_PORT", "5432")
+
+    # Google Cloud SQL settings
+    POSTGRES_USER = os.environ.get("POSTGRES_USER", "ms6135")
+    POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "744761")
+    POSTGRES_DB = os.environ.get("POSTGRES_DB", "proj1part2")
+    POSTGRES_HOST = os.environ.get("POSTGRES_HOST", "34.74.171.121")
     POSTGRES_PORT = os.environ.get("POSTGRES_PORT", "5432")
 
     # Construct the PostgreSQL URL
