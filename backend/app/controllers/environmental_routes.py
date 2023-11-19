@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request, abort
 from app import db
 from app.models.environmental_model import EnvironmentalImpact
 import logging
+from app.services.environmental_service import get_all_environmental_impacts
 
 # Set up logger
 logger = logging.getLogger('environmental_routes')
@@ -22,8 +23,10 @@ def serialize_impact(impact):
 @environmental_bp.route('/', methods=['GET'])
 def get_environmental_impacts():
     try:
-        impacts = EnvironmentalImpact.query.all()
-        return jsonify([serialize_impact(impact) for impact in impacts]), 200
+        impacts = get_all_environmental_impacts()
+        #impacts = EnvironmentalImpact.query.all()
+        #return jsonify([serialize_impact(impact) for impact in impacts]), 200
+        return impacts
     except Exception as e:
         logger.error(f"Error fetching environmental impacts: {e}, Exception type: {type(e).__name__}")
         abort(500, description="Internal Server Error")
@@ -36,4 +39,3 @@ def get_environmental_impact(impact_id):
     except Exception as e:
         logger.error(f"Error fetching environmental impact with id {impact_id}: {e}")
         abort(500, description="Internal Server Error")
-

@@ -1,5 +1,6 @@
 from app.extensions import db
 from app.models.environmental_model import EnvironmentalImpact
+from app.models.material_model import Material
 import logging
 
 # Set up logger
@@ -12,7 +13,19 @@ def get_all_environmental_impacts():
         List[EnvironmentalImpact]: A list of EnvironmentalImpact model instances.
     """
     try:
-        return EnvironmentalImpact.query.all()
+        environmental_query = db.session.query(EnvironmentalImpact,Material.materialname).join(
+        Material,
+        EnvironmentalImpact.materialid == Material.materialid).all()
+        return [
+        {
+            "impact_id": environmental.EnvironmentalImpact.impactid,
+            "material_name": environmental.materialname,
+            "toxicity_level": environmental.EnvironmentalImpact.toxicitylevel,
+            "recyclability": environmental.EnvironmentalImpact.recyclability,
+            "carbon_footprint": environmental.EnvironmentalImpact.carbonfootprint,
+        }
+        for environmental in environmental_query
+    ]
     except Exception as e:
         logger.error(f"Error retrieving all environmental impacts: {e}")
         raise
