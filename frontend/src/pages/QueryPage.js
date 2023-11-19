@@ -123,8 +123,8 @@ const QueryPage = () => {
             >
               <option value="">Select an Application</option>
               {industrialApplications.map(app => (
-                <option key={app.applicationid} value={app.applicationname}>
-                  {app.applicationname}
+                <option key={app.id} value={app.application_name}>
+                  {app.application_name}
                 </option>
               ))}
             </select>
