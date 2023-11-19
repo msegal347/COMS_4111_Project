@@ -6,7 +6,7 @@ const IndustrialApplicationsTable = ({ applications }) => {
       <thead>
         <tr>
           <th>ID</th>
-          <th>Material ID</th>
+          <th>Material Name</th>
           <th>Application Name</th>
           <th>Industry</th>
           {/* Add more columns as needed */}

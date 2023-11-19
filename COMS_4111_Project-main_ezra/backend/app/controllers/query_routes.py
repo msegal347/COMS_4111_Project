@@ -67,7 +67,7 @@ def run_query():
         print(query.statement.compile(compile_kwargs={"literal_binds": True}))
 
         # Execute the query
-        results = query.all()
+        results = query.distinct(Material.materialid)
 
         # Serialize results
         results_list = [
@@ -85,3 +85,66 @@ def run_query():
         error_details = traceback.format_exc()
         current_app.logger.error(f'Error during query execution: {e}\nDetails: {error_details}')
         return jsonify({'error': str(e), 'details': error_details}), 500
+
+@query_bp.route('/materials', methods=['GET'])
+def get_materials():
+    try:
+        category_name = request.args.get('category', type=str)
+        query = db.session.query(
+            Material,
+            GeneralCategory.categoryname
+        ).join(
+            GeneralCategory,
+            Material.generalcategoryid == GeneralCategory.generalcategoryid
+        )
+        
+        if category_name:
+            query = query.filter(GeneralCategory.categoryname == category_name)
+
+        print(query)
+        # Execute the query and fetch the results
+        query_results = query.all()
+        print(query_results)
+
+        # Serialize results
+        results = [{
+            'material_id': material_instance.materialid,
+            'material_name': material_instance.materialname,
+            'category_id': material_instance.generalcategoryid,  # Add this line
+            'category_name': category_name_instance,  # Assuming category_name is a string
+            'elemental_composition': material_instance.elementalcomposition,
+            'molecular_weight': material_instance.molecularweight,
+            'tensile_strength': material_instance.tensilestrength,
+            'ductility': material_instance.ductility,
+            'hardness': material_instance.hardness,
+            'thermal_conductivity': material_instance.thermalconductivity,
+            'heat_capacity': material_instance.heatcapacity,
+            'melting_point': material_instance.meltingpoint,
+            'refractive_index': material_instance.refractiveindex,
+            'absorbance': material_instance.absorbance,
+            'conductivity': material_instance.conductivity,
+            'resistivity': material_instance.resistivity,
+            'created_at': material_instance.createdat.isoformat() if material_instance.createdat else None,
+            'updated_at': material_instance.updatedat.isoformat() if material_instance.updatedat else None
+        } for material_instance, category_name_instance in query_results]
+
+        return jsonify(results), 200
+    except Exception as e:
+        current_app.logger.error(f'Error fetching materials: {e}')
+        return jsonify({'error': str(e)}), 500
+
+@query_bp.route('/industrial_applications', methods=['GET'])
+def get_industrial_applications():
+    try:
+        industry_filter = request.args.get('industry', type=str)
+
+        query = db.session.query(IndustrialApplication)
+        if industry_filter:
+            query = query.filter(IndustrialApplication.industry.ilike(f'%{industry_filter}%'))
+
+        applications = query.all()
+        applications_data = [app.to_dict() for app in applications]
+
+        return jsonify(applications_data), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500

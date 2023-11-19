@@ -12,8 +12,9 @@ sold_by_bp = Blueprint('sold_by', __name__, url_prefix='/api/sold_by')
 def get_relations():
     try:
         relations = get_all_sold_by_relations()
-        print([relation.to_dict() for relation in relations])
-        return jsonify([relation.to_dict() for relation in relations]), 200
+        #print([relation.to_dict() for relation in relations])
+        #return jsonify([relation.to_dict() for relation in relations]), 200
+        return relations
     except Exception as e:
         abort(500, description=str(e))
 

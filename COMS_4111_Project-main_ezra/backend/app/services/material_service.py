@@ -1,7 +1,5 @@
 from app.extensions import db
 from app.models.material_model import Material
-from app.models.general_categories_model import GeneralCategory
-
 import logging
 
 logger = logging.getLogger(__name__)
@@ -13,34 +11,26 @@ def get_all_materials():
     Returns:
         List[dict]: List of dictionaries, where each dictionary represents a material
     """
-    
-    materials_query = db.session.query(Material,GeneralCategory.categoryname).join(
-        GeneralCategory,
-        Material.generalcategoryid == GeneralCategory.generalcategoryid
-    ).all()
-    
-
-    for material in materials_query:
-        print(material.categoryname)
+    materials_query = db.session.query(Material).all()
     return [
         {
-            "id": material.Material.materialid,
-            "name": material.Material.materialname,
-            "general_category_name": material.categoryname,
-            "created_at": material.Material.createdat.isoformat() if material.Material.createdat else None,
-            "updated_at": material.Material.updatedat.isoformat() if material.Material.updatedat else None,
-            "elemental_composition": material.Material.elementalcomposition,
-            "molecular_weight": material.Material.molecularweight,
-            "tensile_strength": material.Material.tensilestrength,
-            "ductility": material.Material.ductility,
-            "hardness": material.Material.hardness,
-            "thermal_conductivity": material.Material.thermalconductivity,
-            "heat_capacity": material.Material.heatcapacity,
-            "melting_point": material.Material.meltingpoint,
-            "refractive_index": material.Material.refractiveindex,
-            "absorbance": material.Material.absorbance,
-            "conductivity": material.Material.conductivity,
-            "resistivity": material.Material.resistivity
+            "id": material.materialid,
+            "name": material.materialname,
+            "general_category_id": material.generalcategoryid,
+            "created_at": material.createdat.isoformat() if material.createdat else None,
+            "updated_at": material.updatedat.isoformat() if material.updatedat else None,
+            "elemental_composition": material.elementalcomposition,
+            "molecular_weight": material.molecularweight,
+            "tensile_strength": material.tensilestrength,
+            "ductility": material.ductility,
+            "hardness": material.hardness,
+            "thermal_conductivity": material.thermalconductivity,
+            "heat_capacity": material.heatcapacity,
+            "melting_point": material.meltingpoint,
+            "refractive_index": material.refractiveindex,
+            "absorbance": material.absorbance,
+            "conductivity": material.conductivity,
+            "resistivity": material.resistivity
         }
         for material in materials_query
     ]

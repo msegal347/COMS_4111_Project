@@ -1,12 +1,29 @@
 from app.extensions import db
 from app.models.sold_by_model import SoldBy
+from app.models.material_model import Material
+from app.models.company_model import Company
 import logging
 
 logger = logging.getLogger('sold_by_service')
 
 def get_all_sold_by_relations():
     try:
-        return SoldBy.query.all()
+        sold_by_query = db.session.query(SoldBy,Material.materialname,Company.companyname).join(
+        Material,
+        SoldBy.materialid == Material.materialid).join(
+        Company,
+        SoldBy.companyid == Company.companyid).all()
+        return [
+        {
+            "materialname": sold_by.materialname,
+            "companyname": sold_by.companyname,
+            "baseprice": sold_by.SoldBy.baseprice,
+            "currency": sold_by.SoldBy.currency
+        }
+        for sold_by in sold_by_query
+    ]
+
+    
     except Exception as e:
         logger.error(f"Error retrieving all sold by relations: {e}")
         raise

@@ -1,33 +1,19 @@
 import React from 'react';
 
-const MaterialFilter = ({ onFilterChange }) => {
-  // Temporary hardcoded categories
-  const categories = [
-    { id: '1', name: 'Category 1' },
-    { id: '2', name: 'Category 2' },
-    { id: '3', name: 'Category 3' },
-  ];
-
+const MaterialsFilter = ({ categories, selectedCategory, onCategoryChange, onFilterSubmit }) => {
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Material Name"
-        onChange={e => onFilterChange('materialname', e.target.value)}
-      />
-      <select onChange={e => onFilterChange('generalcategoryid', e.target.value)} defaultValue="">
-        <option value="" disabled>
-          Select Category
-        </option>
+    <form onSubmit={onFilterSubmit}>
+      <select value={selectedCategory} onChange={onCategoryChange}>
+        <option value="">Select Category</option>
         {categories.map(category => (
-          <option key={category.id} value={category.id}>
-            {category.name}
+          <option key={category.generalcategoryid} value={category.generalcategoryid}>
+            {category.categoryname}
           </option>
         ))}
       </select>
-      {/* ... other input fields */}
-    </div>
+      <button type="submit">Search</button>
+    </form>
   );
 };
 
-export default MaterialFilter;
+export default MaterialsFilter;
