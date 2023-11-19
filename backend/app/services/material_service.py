@@ -15,7 +15,7 @@ def get_all_materials():
     return [
         {
             "id": material.materialid,
-            "name": material.materialname,
+            "material_name": material.materialname,
             "general_category_id": material.generalcategoryid,
             "created_at": material.createdat.isoformat() if material.createdat else None,
             "updated_at": material.updatedat.isoformat() if material.updatedat else None,
@@ -49,7 +49,7 @@ def get_material_by_id(material_id):
     if material_query:
         return {
             "id": material_query.materialid,
-            "name": material_query.materialname,
+            "material_name": material_query.materialname,
             "general_category_id": material_query.generalcategoryid,
             "created_at": material_query.createdat.isoformat() if material_query.createdat else None,
             "updated_at": material_query.updatedat.isoformat() if material_query.updatedat else None,

@@ -75,7 +75,7 @@ const QueryPage = () => {
       try {
         const response = await axios.get('http://localhost:5000/api/industrial');
         setIndustrialApplications(response.data);
-        setIndustrialApplicationsError(''); // Clear any previous errors
+        setIndustrialApplicationsError('');
       } catch (err) {
         setIndustrialApplicationsError('Failed to fetch industrial applications: ' + err.message);
         console.error('Failed to fetch industrial applications:', err);

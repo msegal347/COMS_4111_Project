@@ -8,7 +8,6 @@ const IndustrialApplicationsFilter = ({ onFilterChange }) => {
         placeholder="Industry Name"
         onChange={e => onFilterChange('industry', e.target.value)}
       />
-      {/* Add more filters as needed */}
     </div>
   );
 };
