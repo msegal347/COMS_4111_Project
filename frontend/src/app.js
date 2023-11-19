@@ -9,6 +9,7 @@ import Navigation from './components/Navigation';
 import SoldByPage from './pages/SoldByPage';
 import QueryPage from './pages/QueryPage';
 import './styles/main.css';
+import ExecuteQueryPage from './pages/ExecuteQueryPage';
 
 function App() {
   return (
@@ -22,7 +23,8 @@ function App() {
         <Route path="/companies" element={<CompaniesPage />} />
         <Route path="/sold-by" element={<SoldByPage />} />
         <Route path="/environment" element={<EnvironmentPage />} />{' '}
-        <Route path="/" element={<QueryPage />} />
+        <Route path="/execute-query" element={<ExecuteQueryPage />} />
+        <Route path="/" element={<ExecuteQueryPage />} />
       </Routes>
     </Router>
   );
