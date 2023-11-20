@@ -16,7 +16,6 @@ def get_categories():
         categories = get_all_general_categories()
         return jsonify([category.to_dict() for category in categories]), 200
     except Exception as e:
-        # Log the exception and return a 500 error
         abort(500, description=str(e))
 
 @general_categories_bp.route('/<int:category_id>', methods=['GET'])

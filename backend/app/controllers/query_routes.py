@@ -63,13 +63,10 @@ def run_query():
         if application_filter:
             query = query.filter(IndustrialApplication.applicationname.ilike(f"%{application_filter}%"))
 
-        # Debug: Print the query statement to check if it's correct
         print(query.statement.compile(compile_kwargs={"literal_binds": True}))
 
-        # Execute the query
         results = query.distinct(Material.materialid)
 
-        # Serialize results
         results_list = [
             {
                 'categoryname': result.categoryname,
@@ -102,16 +99,14 @@ def get_materials():
             query = query.filter(GeneralCategory.categoryname == category_name)
 
         print(query)
-        # Execute the query and fetch the results
         query_results = query.all()
         print(query_results)
 
-        # Serialize results
         results = [{
             'material_id': material_instance.materialid,
             'material_name': material_instance.materialname,
-            'category_id': material_instance.generalcategoryid,  # Add this line
-            'category_name': category_name_instance,  # Assuming category_name is a string
+            'category_id': material_instance.generalcategoryid, 
+            'category_name': category_name_instance, 
             'elemental_composition': material_instance.elementalcomposition,
             'molecular_weight': material_instance.molecularweight,
             'tensile_strength': material_instance.tensilestrength,

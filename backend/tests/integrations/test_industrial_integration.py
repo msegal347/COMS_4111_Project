@@ -8,7 +8,6 @@ app.config['TESTING'] = True
 
 @pytest.fixture(scope='module')
 def test_app():
-    # Establish an application context before running the tests.
     ctx = app.app_context()
     ctx.push()
     yield app 
@@ -16,7 +15,6 @@ def test_app():
 
 @pytest.fixture(scope='module')
 def test_client(test_app):
-    # Flask provides a way to test your application by exposing the Werkzeug test Client
     return test_app.test_client()
 
 def test_get_all_applications(test_client):

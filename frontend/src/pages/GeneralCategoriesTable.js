@@ -1,7 +1,6 @@
 import React from 'react';
 
 const GeneralCategoriesTable = ({ categories }) => {
-  // Check if categories array is available and has length before rendering the table
   if (!categories || categories.length === 0) {
     return <p>No categories available.</p>;
   }
@@ -12,7 +11,6 @@ const GeneralCategoriesTable = ({ categories }) => {
         <tr>
           <th>ID</th>
           <th>Category Name</th>
-          {/* Add more columns as needed */}
         </tr>
       </thead>
       <tbody>
@@ -20,7 +18,6 @@ const GeneralCategoriesTable = ({ categories }) => {
           <tr key={category.generalcategoryid}>
             <td>{category.generalcategoryid}</td>
             <td>{category.categoryname}</td>
-            {/* Add more cells as needed */}
           </tr>
         ))}
       </tbody>

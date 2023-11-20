@@ -4,7 +4,6 @@ from sqlalchemy import CheckConstraint
 class EnvironmentalImpact(db.Model):
     __tablename__ = 'environmentalimpact'
 
-    # Column names should be in lowercase to match PostgreSQL's default behavior.
     impactid = db.Column(db.Integer, primary_key=True)
     materialid = db.Column(db.Integer, db.ForeignKey('material.materialid'), nullable=False)
     toxicitylevel = db.Column(db.Float, nullable=False, default=0.0)

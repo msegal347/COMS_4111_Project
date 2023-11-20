@@ -4,7 +4,6 @@ from sqlalchemy import CheckConstraint
 class IndustrialApplication(db.Model):
     __tablename__ = 'industrialapplications'
 
-    # Column names should be in lowercase to match PostgreSQL's default behavior.
     applicationid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     materialid = db.Column(db.Integer, db.ForeignKey('material.materialid'), nullable=True)
     applicationname = db.Column(db.String(255), nullable=False)

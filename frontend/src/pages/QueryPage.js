@@ -156,7 +156,6 @@ const QueryPage = () => {
                 </thead>
                 <tbody>
                   {results.map((result, index) => (
-                    // The key here should be something unique from your result if possible
                     <tr key={result.materialname + index}>
                       <td>{result.materialname}</td>
                       <td>{result.categoryname}</td>

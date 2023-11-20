@@ -7,7 +7,6 @@ def test_connection(uri):
     try:
         engine = create_engine(uri)
         with engine.connect() as connection:
-            # Use the text() function to create a SQL expression text clause
             result = connection.execute(text("SELECT table_name FROM information_schema.tables WHERE table_schema='public'"))
             tables = [row[0] for row in result]
             return tables

@@ -4,12 +4,10 @@ from app import create_app
 from app.models.material_model import Material
 from app.services.material_service import get_all_materials, get_material_by_id
 
-# Initialize the Flask application for testing
 app = create_app()
 app.config['TESTING'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
 
-# Sample material data
 sample_materials = [
     Material(materialname="Material A", generalcategoryid=1),
     Material(materialname="Material B", generalcategoryid=2)
@@ -17,11 +15,9 @@ sample_materials = [
 sample_materials[0].materialid = 1
 sample_materials[1].materialid = 2
 
-# Mock query responses
 mock_all_query = sample_materials
 mock_single_query = sample_materials[0]
 
-# Test for GET all materials
 def test_get_materials():
     with patch('app.extensions.db.session.query') as mock_query:
         mock_query.return_value.all.return_value = mock_all_query
@@ -70,7 +66,6 @@ def test_get_materials():
                 }
             ]
 
-# Test for GET a single material by ID
 def test_get_material():
     with patch('app.extensions.db.session.query') as mock_query:
         mock_query.return_value.filter_by.return_value.first.return_value = mock_single_query

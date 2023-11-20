@@ -4,12 +4,10 @@ from flask import jsonify
 from app.app import create_app
 from app.models.company_model import Company
 
-# Initialize the Flask application for testing
 app = create_app()
 app.config['TESTING'] = True
 app.config['SERVER_NAME'] = 'localhost.local'
 
-# Fixture for creating sample companies
 @pytest.fixture
 def sample_companies():
     company_a = Company(CompanyName="Company A", Location="Location A")
@@ -18,7 +16,6 @@ def sample_companies():
     company_b.CompanyID = 2
     return [company_a, company_b]
 
-# Test for GET all companies route
 def test_get_companies_route(sample_companies):
     with patch('app.models.company_model.db.session.query') as mock_query:
         mock_query.return_value.all.return_value = sample_companies
@@ -30,7 +27,6 @@ def test_get_companies_route(sample_companies):
             assert data[0]['name'] == "Company A"
             assert data[1]['name'] == "Company B"
 
-# Test for GET a single company by ID route when the company is found
 def test_get_company_route_found(sample_companies):
     with patch('app.models.company_model.db.session.query') as mock_query:
         mock_query.return_value.filter_by.return_value.first.return_value = sample_companies[0]
@@ -40,7 +36,6 @@ def test_get_company_route_found(sample_companies):
             data = response.get_json()
             assert data['name'] == "Company A"
 
-# Test for GET a single company by ID route when the company is not found
 def test_get_company_route_not_found():
     with patch('app.models.company_model.db.session.query') as mock_query:
         mock_query.return_value.filter_by.return_value.first.return_value = None

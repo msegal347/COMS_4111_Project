@@ -9,21 +9,20 @@ app.config['TESTING'] = True
 @pytest.fixture(scope='module')
 def test_app():
     with app.app_context():
-        yield app  # This will be the app context used in tests
+        yield app 
 
 @pytest.fixture(scope='module')
 def test_client(test_app):
     return test_app.test_client()
 
 def test_run_query_material_name(test_client):
-    # Arrange: Fetch an existing material by name
-    material = Material.query.filter_by(materialname="Gallium Arsenide").first()
-    assert material is not None  # Ensure that the material exists
 
-    # Act: Make a request to the query endpoint with the desired filters
+    material = Material.query.filter_by(materialname="Gallium Arsenide").first()
+    assert material is not None  
+
+  
     response = test_client.post('/api/query/', json={
         'material': {'materialname': material.materialname},
-        # Add other filters
     })
 
     assert response.status_code == 200
@@ -32,7 +31,7 @@ def test_run_query_material_name(test_client):
     assert any(result['materialname'] == material.materialname for result in query_results)
 
 def test_run_query_with_company_filter(test_client):
-    # Arrange
+
     company_name = "Company A"
     filter_data = {'company': {'companyname': company_name}}
 
@@ -50,7 +49,7 @@ def test_run_query_with_environmental_filter(test_client):
 
     assert response.status_code == 200
     results = response.get_json()
-    # Assuming the key for recyclability in the serialized output is 'recyclable'
+
     assert all(env['recyclable'] == recyclable for env in results if 'recyclable' in env)
 
 def test_run_query_with_sold_by_filter(test_client):
@@ -89,17 +88,16 @@ def test_run_query_with_combined_filters(test_client):
     )
 
 def test_run_query_no_results(test_client):
-    # Arrange
+
     filter_data = {'material': {'materialname': "Nonexistent Material"}}
 
-    # Act
+
     response = test_client.post('/api/query/', json=filter_data)
 
-    # Assert
+
     assert response.status_code == 200
     results = response.get_json()
     assert len(results) == 0
 
-# Add the test cases to the pytest main call if you're running this directly
 if __name__ == "__main__":
     pytest.main(['-vv', 'test_query_integration.py'])

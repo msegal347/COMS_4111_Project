@@ -5,7 +5,6 @@ import IndustrialApplicationsTable from './IndustrialApplicationsTable';
 const IndustrialApplicationsPage = () => {
   const { applications, loading, error } = useIndustrialApplications();
 
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 

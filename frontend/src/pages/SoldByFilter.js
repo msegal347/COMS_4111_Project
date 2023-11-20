@@ -13,7 +13,6 @@ const SoldByFilter = ({ onFilterChange }) => {
         placeholder="Filter by Company ID"
         onChange={e => onFilterChange('companyId', e.target.value)}
       />
-      {/* Add more filters as needed */}
     </div>
   );
 };

@@ -8,7 +8,6 @@ company_bp = Blueprint("company", __name__, url_prefix="/api/company")
 def get_companies():
     try:
         companies_query = db.session.query(Company).all()
-        # Use lowercase attributes as defined in the model
         companies = [
             {
                 "id": company.companyid, 

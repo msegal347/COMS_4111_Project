@@ -3,7 +3,6 @@ from app.extensions import db
 class GeneralCategory(db.Model):
     __tablename__ = 'generalcategories'
 
-    # Column names should be in lowercase to match PostgreSQL's default behavior.
     generalcategoryid = db.Column(db.Integer, primary_key=True)
     categoryname = db.Column(db.String(255), nullable=False, unique=True)
 

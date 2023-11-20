@@ -3,7 +3,6 @@ from app.extensions import db
 class Company(db.Model):
     __tablename__ = 'company'
 
-    # Column names should be in lowercase to match PostgreSQL's default behavior.
     companyid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     companyname = db.Column(db.String(255), nullable=False, unique=True)
     location = db.Column(db.String(255), nullable=False)

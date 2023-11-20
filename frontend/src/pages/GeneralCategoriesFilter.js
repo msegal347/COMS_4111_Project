@@ -8,7 +8,6 @@ const GeneralCategoriesFilter = ({ onFilterChange }) => {
         placeholder="Category Name"
         onChange={e => onFilterChange('categoryName', e.target.value)}
       />
-      {/* Add more filters as needed */}
     </div>
   );
 };

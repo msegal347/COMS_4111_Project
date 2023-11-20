@@ -12,9 +12,9 @@ const useMaterials = () => {
     setMaterials([]);
     try {
       const queryString = category ? `category=${encodeURIComponent(category)}` : '';
-      console.log(`Requesting materials with category: ${category}`); // Log the exact request
+      console.log(`Requesting materials with category: ${category}`);
       const response = await axios.get(`http://localhost:5000/api/query/materials?${queryString}`);
-      console.log('Received response:', response.data); // Log the received response
+      console.log('Received response:', response.data);
       setMaterials(response.data);
     } catch (err) {
       console.error('Error fetching materials:', err);

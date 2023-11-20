@@ -3,7 +3,6 @@ from app.models.environmental_model import EnvironmentalImpact
 from app.models.material_model import Material
 import logging
 
-# Set up logger
 logger = logging.getLogger('environmental_service')
 
 def get_all_environmental_impacts():

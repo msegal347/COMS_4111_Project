@@ -3,9 +3,8 @@ from app.models.industrial_model import IndustrialApplication
 from app.models.material_model import Material
 import logging
 
-# Set up logger
 logger = logging.getLogger('industrial_service')
-#print('nothing?')
+
 
 def get_all_applications():
     """
@@ -14,7 +13,6 @@ def get_all_applications():
         List[dict]: A list of dictionaries containing industrial application data.
     """
     try:
-        # Use IndustrialApplication class for querying
         industrial_query = db.session.query(
             IndustrialApplication,
             Material.materialname
@@ -46,7 +44,6 @@ def get_application_by_id(application_id):
     """
     print('looks like we got here though')
     try:
-        # Use IndustrialApplication class for querying
         return IndustrialApplication.query.get(application_id)
     except Exception as e:
         logger.error(f"Error retrieving industrial application with ID {application_id}: {e}")

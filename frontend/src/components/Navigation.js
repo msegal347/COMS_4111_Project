@@ -6,6 +6,9 @@ const Navigation = () => {
     <nav>
       <ul>
         <li>
+          <Link to="/execute-query">Execute Query</Link>
+        </li>
+        <li>
           <Link to="/query">Search Database</Link>
         </li>
         <li>
