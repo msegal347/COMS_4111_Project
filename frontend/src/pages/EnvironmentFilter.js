@@ -8,7 +8,6 @@ const EnvironmentFilter = ({ onFilterChange }) => {
         placeholder="Filter by Material ID"
         onChange={e => onFilterChange('material_id', e.target.value)}
       />
-      {/* Add more filters as needed */}
     </div>
   );
 };

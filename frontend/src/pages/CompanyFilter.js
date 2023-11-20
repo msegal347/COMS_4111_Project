@@ -8,7 +8,6 @@ const CompanyFilter = ({ onFilterChange }) => {
         placeholder="Company Name"
         onChange={e => onFilterChange('name', e.target.value)}
       />
-      {/* Add more filters as needed */}
     </div>
   );
 };

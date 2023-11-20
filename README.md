@@ -128,3 +128,24 @@ If running into a collation error, run the following command:
 ```bash
 ALTER DATABASE "materialsDB" REFRESH COLLATION VERSION;
 ```
+
+### Cloud Deployment
+
+Install all dependencies
+
+To start the backend, run the following command:
+
+```bash
+flask run --host=0.0.0.0
+```
+
+To start the frontend, run the following command:
+
+```bash
+serve -s build
+```
+
+To access the application:
+
+http://34.86.7.158:3000/
+

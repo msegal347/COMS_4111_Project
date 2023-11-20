@@ -1,89 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import useQueryData from '../hooks/useQueryData';
 import '../styles/QueryPage.css';
 
 const QueryPage = () => {
-  const [generalCategories, setGeneralCategories] = useState([]);
-  const [companies, setCompanies] = useState([]);
+  const {
+    generalCategories,
+    companies,
+    industrialApplications,
+    results,
+    loading,
+    error,
+    submitQuery,
+  } = useQueryData();
+
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedCompany, setSelectedCompany] = useState('');
-  const [industrialApplications, setIndustrialApplications] = useState([]);
   const [selectedApplication, setSelectedApplication] = useState('');
-  const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [industrialApplicationsError, setIndustrialApplicationsError] = useState('');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const [generalResponse, companyResponse, applicationResponse] = await Promise.all([
-          axios.get('http://localhost:5000/api/general_categories'),
-          axios.get('http://localhost:5000/api/company'),
-          axios.get('http://localhost:5000/api/industrial'),
-        ]);
-        setGeneralCategories(generalResponse.data);
-        setCompanies(companyResponse.data);
-        setIndustrialApplications(applicationResponse.data);
-      } catch (err) {
-        setError('Failed to fetch data: ' + err.message);
-        console.error('Failed to fetch data:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const handleCategoryChange = event => setSelectedCategory(event.target.value);
+  const handleCompanyChange = event => setSelectedCompany(event.target.value);
+  const handleApplicationChange = event => setSelectedApplication(event.target.value);
 
-    fetchData();
-  }, []);
-
-  const handleCategoryChange = event => {
-    setSelectedCategory(event.target.value);
-  };
-
-  const handleCompanyChange = event => {
-    setSelectedCompany(event.target.value);
-  };
-
-  const handleApplicationChange = event => {
-    setSelectedApplication(event.target.value);
-  };
-
-  const handleSubmit = async event => {
+  const handleSubmit = event => {
     event.preventDefault();
-    setLoading(true);
-    setError(null);
-
-    try {
-      const filterData = {
-        category: selectedCategory,
-        company: selectedCompany,
-        industrial: selectedApplication,
-      };
-      const response = await axios.post('http://localhost:5000/api/query', filterData);
-      setResults(response.data);
-    } catch (err) {
-      setError('Error during form submission: ' + err.message);
-      console.error('Error during form submission:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    const fetchIndustrialApplications = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/api/industrial');
-        setIndustrialApplications(response.data);
-        setIndustrialApplicationsError('');
-      } catch (err) {
-        setIndustrialApplicationsError('Failed to fetch industrial applications: ' + err.message);
-        console.error('Failed to fetch industrial applications:', err);
-      }
+    const filterData = {
+      category: selectedCategory,
+      company: selectedCompany,
+      industrial: selectedApplication,
     };
-
-    fetchIndustrialApplications();
-  }, []);
+    submitQuery(filterData);
+  };
 
   return (
     <div>
@@ -128,9 +74,7 @@ const QueryPage = () => {
                 </option>
               ))}
             </select>
-            {industrialApplicationsError && (
-              <div className="error">{industrialApplicationsError}</div>
-            )}
+            {error && <div className="error">{error}</div>}
           </fieldset>
 
           <button type="submit" disabled={loading}>

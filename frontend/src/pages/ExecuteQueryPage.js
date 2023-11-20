@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import useExecuteQuery from '../hooks/useExecuteQuery';
 
 const QUERY_TEMPLATES = {
   select_all_materials: 'All Materials',
@@ -33,31 +33,11 @@ const QUERY_TEMPLATES = {
 
 const ExecuteQueryPage = () => {
   const [queryKey, setQueryKey] = useState('select_all_materials');
-  const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const { results, runQuery, loading, error } = useExecuteQuery();
 
   const handleSubmit = async event => {
     event.preventDefault();
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await axios.post(
-        'http://localhost:5000/api/execute-query',
-        { query_key: queryKey },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      setResults(response.data);
-    } catch (err) {
-      setError('Error executing query: ' + err.message);
-    } finally {
-      setLoading(false);
-    }
+    runQuery(queryKey);
   };
 
   return (

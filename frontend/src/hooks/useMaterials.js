@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import axios from 'axios';
+import { getMaterials } from '../services/api';
 
 const useMaterials = () => {
   const [materials, setMaterials] = useState([]);
@@ -11,9 +11,9 @@ const useMaterials = () => {
     setError(null);
     setMaterials([]);
     try {
-      const queryString = category ? `category=${encodeURIComponent(category)}` : '';
+      const filters = category ? { category: category } : {};
       console.log(`Requesting materials with category: ${category}`);
-      const response = await axios.get(`http://localhost:5000/api/query/materials?${queryString}`);
+      const response = await getMaterials(filters);
       console.log('Received response:', response.data);
       setMaterials(response.data);
     } catch (err) {
@@ -29,7 +29,7 @@ const useMaterials = () => {
     setError(null);
     setMaterials([]);
     try {
-      const response = await axios.get('http://localhost:5000/api/material');
+      const response = await getMaterials();
       setMaterials(response.data);
     } catch (err) {
       setError(err);
