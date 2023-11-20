@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, current_app
 from sqlalchemy.orm import joinedload
 from app.extensions import db
-from app.models import Material, Company, EnvironmentalImpact, SoldBy, GeneralCategory, IndustrialApplication
+from app.models import Material, Company, EnvironmentalImpact, SoldBy, GeneralCategory, IndustrialApplication, HasPracticalUses
 import traceback
 
 query_bp = Blueprint('query', __name__, url_prefix='/api/query')
@@ -21,13 +21,14 @@ def serialize_model(model_instance):
     """Serialize a SQLAlchemy model instance into a dictionary."""
     return {column.name: getattr(model_instance, column.name) for column in model_instance.__table__.columns}
 
+    
+
 @query_bp.route('', methods=['POST'])
 def run_query():
     try:
         query_data = request.get_json()
         current_app.logger.debug(f"Received query data: {query_data}")
 
-        # Construct the base query
         query = db.session.query(
             Material.materialname,
             GeneralCategory.categoryname,
@@ -43,21 +44,22 @@ def run_query():
             Company,
             SoldBy.companyid == Company.companyid
         ).outerjoin(
+            HasPracticalUses,
+            Material.materialid == HasPracticalUses.materialid
+        ).outerjoin(
             IndustrialApplication,
-            Material.materialid == IndustrialApplication.materialid
+            HasPracticalUses.applicationid == IndustrialApplication.applicationid
         )
 
-        # Apply category filter
+
         category_filter = query_data.get('category')
         if category_filter:
             query = query.filter(GeneralCategory.categoryname == category_filter)
 
-        # Apply company filter
         company_filter = query_data.get('company')
         if company_filter:
             query = query.filter(Company.companyname.ilike(f"%{company_filter}%"))
 
-        # Apply industrial application filter
         application_filter = query_data.get('industrial')
         print(f"application_filter: {application_filter}")
         if application_filter:
@@ -98,30 +100,12 @@ def get_materials():
         if category_name:
             query = query.filter(GeneralCategory.categoryname == category_name)
 
-        print(query)
-        query_results = query.all()
-        print(query_results)
+        print(query.statement.compile(compile_kwargs={"literal_binds": True}))
 
-        results = [{
-            'material_id': material_instance.materialid,
-            'material_name': material_instance.materialname,
-            'category_id': material_instance.generalcategoryid, 
-            'category_name': category_name_instance, 
-            'elemental_composition': material_instance.elementalcomposition,
-            'molecular_weight': material_instance.molecularweight,
-            'tensile_strength': material_instance.tensilestrength,
-            'ductility': material_instance.ductility,
-            'hardness': material_instance.hardness,
-            'thermal_conductivity': material_instance.thermalconductivity,
-            'heat_capacity': material_instance.heatcapacity,
-            'melting_point': material_instance.meltingpoint,
-            'refractive_index': material_instance.refractiveindex,
-            'absorbance': material_instance.absorbance,
-            'conductivity': material_instance.conductivity,
-            'resistivity': material_instance.resistivity,
-            'created_at': material_instance.createdat.isoformat() if material_instance.createdat else None,
-            'updated_at': material_instance.updatedat.isoformat() if material_instance.updatedat else None
-        } for material_instance, category_name_instance in query_results]
+        query_results = query.all()
+
+        results = [serialize_model(material_instance) for material_instance, _ in query_results]
+        results = [{"category_name": category_name_instance, **result} for result, category_name_instance in query_results]
 
         return jsonify(results), 200
     except Exception as e:
@@ -132,14 +116,26 @@ def get_materials():
 def get_industrial_applications():
     try:
         industry_filter = request.args.get('industry', type=str)
+        query = db.session.query(
+            IndustrialApplication.applicationname,
+            IndustrialApplication.industry,
+            HasPracticalUses.materialid
+        ).join(
+            HasPracticalUses,
+            HasPracticalUses.applicationid == IndustrialApplication.applicationid
+        )
 
-        query = db.session.query(IndustrialApplication)
         if industry_filter:
             query = query.filter(IndustrialApplication.industry.ilike(f'%{industry_filter}%'))
 
         applications = query.all()
-        applications_data = [app.to_dict() for app in applications]
+        applications_data = [{
+            'application_name': app.applicationname,
+            'industry': app.industry,
+            'material_id': app.materialid
+        } for app in applications]
 
         return jsonify(applications_data), 200
     except Exception as e:
+        current_app.logger.error(f'Error fetching industrial applications: {e}')
         return jsonify({'error': str(e)}), 500

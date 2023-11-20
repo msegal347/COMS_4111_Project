@@ -1,10 +1,9 @@
 from app.extensions import db
 from app.models.industrial_model import IndustrialApplication
-from app.models.material_model import Material
+from app.models.has_practical_uses_model import HasPracticalUses 
 import logging
 
 logger = logging.getLogger('industrial_service')
-
 
 def get_all_applications():
     """
@@ -14,21 +13,18 @@ def get_all_applications():
     """
     try:
         industrial_query = db.session.query(
-            IndustrialApplication,
-            Material.materialname
-        ).join(
-            Material,
-            IndustrialApplication.materialid == Material.materialid
+            IndustrialApplication.applicationid,
+            IndustrialApplication.applicationname,
+            IndustrialApplication.industry
         ).all()
-        
+
         return [
             {
-                "id": industrial_app.applicationid,
-                "material_name": material_name,
-                "application_name": industrial_app.applicationname,
-                "industry": industrial_app.industry
+                "id": application_id,
+                "application_name": application_name,
+                "industry": industry
             }
-            for industrial_app, material_name in industrial_query
+            for application_id, application_name, industry in industrial_query
         ]
     except Exception as e:
         logger.error(f"Error retrieving all industrial applications: {e}")
@@ -40,11 +36,13 @@ def get_application_by_id(application_id):
     Args:
         application_id (int): The ID of the industrial application to retrieve.
     Returns:
-        IndustrialApplication: An instance of IndustrialApplication if found, otherwise None.
+        dict: A dictionary containing the industrial application data if found, otherwise None.
     """
-    print('looks like we got here though')
     try:
-        return IndustrialApplication.query.get(application_id)
+        industrial_app = IndustrialApplication.query.get(application_id)
+        if industrial_app:
+            return industrial_app.to_dict()
+        return None
     except Exception as e:
         logger.error(f"Error retrieving industrial application with ID {application_id}: {e}")
         raise

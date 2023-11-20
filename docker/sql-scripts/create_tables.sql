@@ -40,25 +40,43 @@ CREATE TABLE Company (
 );
 
 -- Industrial Applications
+--CREATE TABLE IndustrialApplications (
+    --ApplicationID SERIAL,
+    --MaterialID INT,
+    --ApplicationName VARCHAR(255) NOT NULL,
+    --Industry VARCHAR(255) NOT NULL,
+    --PRIMARY KEY (ApplicationID),
+    --FOREIGN KEY (MaterialID) REFERENCES Material(MaterialID),
+    --CHECK (ApplicationName <> '')
+--);
+
+-- Industrial Applications (no MaterialID)
 CREATE TABLE IndustrialApplications (
     ApplicationID SERIAL,
-    MaterialID INT,
     ApplicationName VARCHAR(255) NOT NULL,
     Industry VARCHAR(255) NOT NULL,
     PRIMARY KEY (ApplicationID),
-    FOREIGN KEY (MaterialID) REFERENCES Material(MaterialID),
     CHECK (ApplicationName <> '')
 );
 
 -- Environmental Impact
+--CREATE TABLE EnvironmentalImpact (
+    --ImpactID SERIAL,
+    --MaterialID INT,
+    --ToxicityLevel FLOAT CHECK (ToxicityLevel >= 0 AND ToxicityLevel <= 10),
+    --Recyclability BOOLEAN,
+    --CarbonFootprint FLOAT CHECK (CarbonFootprint >= 0),
+    --PRIMARY KEY (ImpactID),
+    --FOREIGN KEY (MaterialID) REFERENCES Material(MaterialID)
+--);
+
+-- Environmental Impact (no MaterialID)
 CREATE TABLE EnvironmentalImpact (
     ImpactID SERIAL,
-    MaterialID INT,
     ToxicityLevel FLOAT CHECK (ToxicityLevel >= 0 AND ToxicityLevel <= 10),
     Recyclability BOOLEAN,
     CarbonFootprint FLOAT CHECK (CarbonFootprint >= 0),
-    PRIMARY KEY (ImpactID),
-    FOREIGN KEY (MaterialID) REFERENCES Material(MaterialID)
+    PRIMARY KEY (ImpactID)
 );
 
 -- Sold By Relationship (with Price as a descriptive attribute)
@@ -74,8 +92,8 @@ CREATE TABLE SoldBy (
 
 -- HasEffectOnEnvironment Relationship
 CREATE TABLE HasEffectOnEnvironment (
-    MaterialID INT,
-    ImpactID INT,
+    MaterialID INT NOT NULL,
+    ImpactID INT NOT NULL,
     PRIMARY KEY (MaterialID, ImpactID),
     FOREIGN KEY (MaterialID) REFERENCES Material(MaterialID),
     FOREIGN KEY (ImpactID) REFERENCES EnvironmentalImpact(ImpactID)
@@ -84,8 +102,8 @@ CREATE TABLE HasEffectOnEnvironment (
 
 -- HasPracticalUses Relationship
 CREATE TABLE HasPracticalUses (
-    MaterialID INT,
-    ApplicationID INT,
+    MaterialID INT NOT NULL,
+    ApplicationID INT NOT NULL,
     PRIMARY KEY (MaterialID, ApplicationID),
     FOREIGN KEY (MaterialID) REFERENCES Material(MaterialID),
     FOREIGN KEY (ApplicationID) REFERENCES IndustrialApplications(ApplicationID)

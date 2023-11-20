@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getEnvironmentalImpacts } from '../services/api';
 
-const useEnvironment = () => {
+const useEnvironmentalImpacts = () => {
   const [environmentalImpacts, setEnvironmentalImpacts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -26,4 +26,4 @@ const useEnvironment = () => {
   return { environmentalImpacts, loading, error };
 };
 
-export default useEnvironment;
+export default useEnvironmentalImpacts;

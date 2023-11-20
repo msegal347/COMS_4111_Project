@@ -14,7 +14,7 @@ industrial_bp = Blueprint('industrial', __name__, url_prefix='/api/industrial')
 def get_applications():
     try:
         applications = get_all_applications()
-        return applications
+        return jsonify(applications), 200
     except Exception as e:
         logger.error(f"Error fetching industrial applications: {e}")
         abort(500, description="Internal Server Error")
@@ -23,7 +23,7 @@ def get_applications():
 def get_application(application_id):
     try:
         application = get_application_by_id(application_id)
-        if application is not None:
+        if application:
             return jsonify(application.to_dict()), 200
         else:
             abort(404, description="Industrial application not found")

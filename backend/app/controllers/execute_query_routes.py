@@ -23,13 +23,8 @@ QUERY_TEMPLATES = {
     ''',
 
     'select_all_industrial_applications': '''
-        SELECT ApplicationName, Industry, MaterialID
+        SELECT ApplicationName, Industry
         FROM IndustrialApplications
-    ''',
-
-    'select_all_environmental_impacts': '''
-        SELECT CarbonFootprint, MaterialID, ToxicityLevel
-        FROM environmentalimpact
     ''',
 
     'select_all_materials_by_company_3M': '''
@@ -57,10 +52,10 @@ QUERY_TEMPLATES = {
             IndustrialApplications.ApplicationName
         FROM 
             Material
-        LEFT JOIN 
-            IndustrialApplications
-        ON 
-            Material.MaterialID = IndustrialApplications.MaterialID
+        JOIN 
+            HasPracticalUses ON Material.MaterialID = HasPracticalUses.MaterialID
+        JOIN 
+            IndustrialApplications ON HasPracticalUses.ApplicationID = IndustrialApplications.ApplicationID
     ''',
 
     'list_materials_sold_by_all_companies': '''
@@ -75,7 +70,7 @@ QUERY_TEMPLATES = {
         INNER JOIN Company ON SoldBy.CompanyID = Company.CompanyID;
     ''',
 
-    'list_materials_used_in_manufacturing_by_BASF': '''
+    'list_materials_used_in_pharmaceuticals_by_BASF': '''
         SELECT
             Material.MaterialName,
             Company.CompanyName,
@@ -94,7 +89,7 @@ QUERY_TEMPLATES = {
             ON HasPracticalUses.ApplicationID = IndustrialApplications.ApplicationID
         WHERE
             Company.CompanyName = 'BASF'
-            AND IndustrialApplications.ApplicationName = 'Cutting Tools Manufacturing';
+            AND IndustrialApplications.ApplicationName = 'Alloys and Pharmaceuticals';
     ''',
 
     'list_toxic_materials_sold_by_international_paper': '''
@@ -108,29 +103,33 @@ QUERY_TEMPLATES = {
         JOIN 
             Company ON SoldBy.CompanyID = Company.CompanyID
         JOIN 
-            EnvironmentalImpact ON Material.MaterialID = EnvironmentalImpact.MaterialID
+            HasEffectOnEnvironment ON Material.MaterialID = HasEffectOnEnvironment.MaterialID
+        JOIN 
+            EnvironmentalImpact ON HasEffectOnEnvironment.ImpactID = EnvironmentalImpact.ImpactID
         WHERE 
             Company.CompanyName = 'International Paper'
         AND 
-            EnvironmentalImpact.ToxicityLevel > 0;
+            EnvironmentalImpact.ToxicityLevel > 0
     ''',
 
     'price_of_toxic_materials_with_tensile_strength_greater_than_100': '''
         SELECT DISTINCT
-            Material.MaterialName,
-            SoldBy.BasePrice,
-            Material.TensileStrength,
-            EnvironmentalImpact.ToxicityLevel
+            M.MaterialName,
+            S.BasePrice,
+            M.TensileStrength,
+            EI.ToxicityLevel
         FROM 
-            Material
+            Material M
         INNER JOIN 
-            EnvironmentalImpact ON Material.MaterialID = EnvironmentalImpact.MaterialID
+            HasEffectOnEnvironment HE ON M.MaterialID = HE.MaterialID
         INNER JOIN 
-            SoldBy ON Material.MaterialID = SoldBy.MaterialID
+            EnvironmentalImpact EI ON HE.ImpactID = EI.ImpactID
+        INNER JOIN 
+            SoldBy S ON M.MaterialID = S.MaterialID
         WHERE 
-            Material.TensileStrength > 100
+            M.TensileStrength > 100
         AND 
-            EnvironmentalImpact.ToxicityLevel > 1;
+            EI.ToxicityLevel > 1;
     ''',
 
     'list_materials_with_average_price': '''
@@ -147,30 +146,32 @@ QUERY_TEMPLATES = {
 
     'top_5_most_toxic_materials': '''
         SELECT 
-            Material.MaterialName,
-            EnvironmentalImpact.ToxicityLevel
+            M.MaterialName,
+            EI.ToxicityLevel
         FROM 
-            Material
+            Material M
         JOIN 
-            EnvironmentalImpact ON Material.MaterialID = EnvironmentalImpact.MaterialID
+            HasEffectOnEnvironment HE ON M.MaterialID = HE.MaterialID
+        JOIN 
+            EnvironmentalImpact EI ON HE.ImpactID = EI.ImpactID
         ORDER BY 
-            EnvironmentalImpact.ToxicityLevel DESC
+            EI.ToxicityLevel DESC
         LIMIT 5;
     ''',
 
     'materials_with_their_categories_and_number_of_industrial_applications': '''
         SELECT 
-            Material.MaterialName,
-            GeneralCategories.CategoryName,
-            COUNT(IndustrialApplications.ApplicationID) AS NumberOfApplications
+            M.MaterialName,
+            GC.CategoryName,
+            COUNT(HPU.ApplicationID) AS NumberOfApplications
         FROM 
-            Material
+            Material M
         JOIN 
-            GeneralCategories ON Material.GeneralCategoryID = GeneralCategories.GeneralCategoryID
+            GeneralCategories GC ON M.GeneralCategoryID = GC.GeneralCategoryID
         LEFT JOIN 
-            IndustrialApplications ON Material.MaterialID = IndustrialApplications.MaterialID
+            HasPracticalUses HPU ON M.MaterialID = HPU.MaterialID
         GROUP BY 
-            Material.MaterialName, GeneralCategories.CategoryName;
+            M.MaterialName, GC.CategoryName;
     ''',
 
     'companies_and_count_of_materials_they_sell': '''
@@ -198,15 +199,17 @@ QUERY_TEMPLATES = {
 
     'materials_with_high_carbon_footprint_and_environmental_impact': '''
         SELECT 
-            Material.MaterialName,
-            EnvironmentalImpact.CarbonFootprint,
-            EnvironmentalImpact.ToxicityLevel
+            M.MaterialName,
+            EI.CarbonFootprint,
+            EI.ToxicityLevel
         FROM 
-            Material
+            Material M
         JOIN 
-            EnvironmentalImpact ON Material.MaterialID = EnvironmentalImpact.MaterialID
+            HasEffectOnEnvironment HE ON M.MaterialID = HE.MaterialID
+        JOIN 
+            EnvironmentalImpact EI ON HE.ImpactID = EI.ImpactID
         WHERE 
-            EnvironmentalImpact.CarbonFootprint > 5;
+            EI.CarbonFootprint > 5;
     ''',
 
     'materials_more_expensive_than_average_category_price': '''
@@ -238,20 +241,22 @@ QUERY_TEMPLATES = {
 
     'companies_and_materials_they_sell_in_electronics_industry': '''
         SELECT 
-            Company.CompanyName,
-            Material.MaterialName
+            C.CompanyName,
+            M.MaterialName
         FROM 
-            Company
+            Company C
         JOIN 
-            SoldBy ON Company.CompanyID = SoldBy.CompanyID
+            SoldBy S ON C.CompanyID = S.CompanyID
         JOIN 
-            Material ON SoldBy.MaterialID = Material.MaterialID
+            Material M ON S.MaterialID = M.MaterialID
         JOIN 
-            IndustrialApplications ON Material.MaterialID = IndustrialApplications.MaterialID
+            HasPracticalUses HPU ON M.MaterialID = HPU.MaterialID
+        JOIN 
+            IndustrialApplications IA ON HPU.ApplicationID = IA.ApplicationID
         WHERE 
-            IndustrialApplications.Industry = 'Electronics'
+            IA.Industry = 'Electronics'
         GROUP BY 
-            Company.CompanyName, Material.MaterialName;
+            C.CompanyName, M.MaterialName;
     ''',
 
     'three_most_expensive_general_categories': '''
@@ -269,6 +274,20 @@ QUERY_TEMPLATES = {
         ORDER BY 
             AvgPrice DESC
         LIMIT 3;
+    ''',
+
+    'all_materials_and_their_environmental_impacts': '''
+        SELECT 
+            m.MaterialName,
+            e.ToxicityLevel,
+            e.Recyclability,
+            e.CarbonFootprint
+        FROM 
+            Material m
+        JOIN 
+            HasEffectOnEnvironment he ON m.MaterialID = he.MaterialID
+        JOIN 
+            EnvironmentalImpact e ON he.ImpactID = e.ImpactID;
     ''',
 }
 
@@ -290,7 +309,13 @@ def execute_query():
         with db.engine.connect() as connection:
             result = connection.execute(text(query_template), parameters)
             rows = result.fetchall()
-            result_list = [dict(row._mapping) for row in rows] 
+            result_list = []
+            for row in rows:
+                row_dict = dict(row._mapping)
+                for key, value in row_dict.items():
+                    if isinstance(value, bool):
+                        row_dict[key] = "TRUE" if value else "FALSE"
+                result_list.append(row_dict)
             logger.info(f"Query executed successfully, returning {len(result_list)} rows")
             return jsonify(result_list), 200
     except Exception as e:

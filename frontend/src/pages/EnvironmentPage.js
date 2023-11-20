@@ -10,6 +10,7 @@ const EnvironmentPage = () => {
 
   return (
     <div>
+      <h1>Environmental Impacts</h1>
       <EnvironmentTable environmentalImpacts={environmentalImpacts} />
     </div>
   );

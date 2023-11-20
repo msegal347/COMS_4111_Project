@@ -9,25 +9,16 @@ def get_all_environmental_impacts():
     """
     Retrieves all environmental impacts from the database.
     Returns:
-        List[EnvironmentalImpact]: A list of EnvironmentalImpact model instances.
+        List[dict]: A list of dictionaries containing environmental impact data.
     """
     try:
-        environmental_query = db.session.query(EnvironmentalImpact,Material.materialname).join(
-        Material,
-        EnvironmentalImpact.materialid == Material.materialid).all()
-        return [
-        {
-            "impact_id": environmental.EnvironmentalImpact.impactid,
-            "material_name": environmental.materialname,
-            "toxicity_level": environmental.EnvironmentalImpact.toxicitylevel,
-            "recyclability": environmental.EnvironmentalImpact.recyclability,
-            "carbon_footprint": environmental.EnvironmentalImpact.carbonfootprint,
-        }
-        for environmental in environmental_query
-    ]
+        impacts = db.session.query(EnvironmentalImpact).all()
+        return impacts 
     except Exception as e:
         logger.error(f"Error retrieving all environmental impacts: {e}")
         raise
+
+
 
 def get_environmental_impact_by_id(impact_id):
     """

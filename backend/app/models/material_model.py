@@ -23,27 +23,32 @@ class Material(db.Model):
     resistivity = db.Column(db.Float, CheckConstraint('resistivity >= 0'))
 
     sold_by_relation = db.relationship('SoldBy', backref='material', lazy=True)
-    environmental_impact = db.relationship('EnvironmentalImpact', backref='material', uselist=False)
+    environmental_impacts = db.relationship('EnvironmentalImpact', secondary='haseffectonenvironment', back_populates='materials')
     general_category = db.relationship('GeneralCategory', backref='materials')
 
-    def __init__(self, materialname, generalcategoryid, elementalcomposition=None, 
-                 molecularweight=None, tensilestrength=None, ductility=None, hardness=None,
-                 thermalconductivity=None, heatcapacity=None, meltingpoint=None, refractiveindex=None,
-                 absorbance=None, conductivity=None, resistivity=None):
-        self.materialname = materialname
-        self.generalcategoryid = generalcategoryid
-        self.elementalcomposition = elementalcomposition
-        self.molecularweight = molecularweight
-        self.tensilestrength = tensilestrength
-        self.ductility = ductility
-        self.hardness = hardness
-        self.thermalconductivity = thermalconductivity
-        self.heatcapacity = heatcapacity
-        self.meltingpoint = meltingpoint
-        self.refractiveindex = refractiveindex
-        self.absorbance = absorbance
-        self.conductivity = conductivity
-        self.resistivity = resistivity
+    def to_dict(self):
+        """
+        Serializes the object to a dictionary.
+        """
+        return {
+            'materialid': self.materialid,
+            'materialname': self.materialname,
+            'generalcategoryid': self.generalcategoryid,
+            'createdat': self.createdat.isoformat() if self.createdat else None,
+            'updatedat': self.updatedat.isoformat() if self.updatedat else None,
+            'elementalcomposition': self.elementalcomposition,
+            'molecularweight': self.molecularweight,
+            'tensilestrength': self.tensilestrength,
+            'ductility': self.ductility,
+            'hardness': self.hardness,
+            'thermalconductivity': self.thermalconductivity,
+            'heatcapacity': self.heatcapacity,
+            'meltingpoint': self.meltingpoint,
+            'refractiveindex': self.refractiveindex,
+            'absorbance': self.absorbance,
+            'conductivity': self.conductivity,
+            'resistivity': self.resistivity
+        }
 
     def __repr__(self):
         return f'<Material {self.materialid}: {self.materialname}, Category: {self.generalcategoryid}>'

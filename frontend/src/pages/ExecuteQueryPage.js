@@ -6,14 +6,12 @@ const QUERY_TEMPLATES = {
   select_all_companies: 'All Companies',
   select_all_general_categories: 'All General Categories',
   select_all_industrial_applications: 'All Industrial Applications',
-  select_all_environmental_impacts: 'All Environmental Impacts',
   select_all_materials_by_company_3M: 'Materials Sold by Company 3M',
   select_all_materials_metals: 'All Metals',
   list_all_materials_with_applications_and_industries:
     'All Materials with Applications and Industries',
   list_materials_sold_by_all_companies: 'Materials Sold by All Companies',
-  list_materials_used_in_manufacturing_by_BASF:
-    'Materials Used in Cutting Tools Manufacturing Sold by BASF',
+  list_materials_used_in_pharmaceuticals_by_BASF: 'Materials Used in Pharmaceuticals Sold by BASF',
   list_toxic_materials_sold_by_international_paper: 'Toxic Materials Sold by International Paper',
   price_of_toxic_materials_with_tensile_strength_greater_than_100:
     'Price of Toxic Materials with Tensile Strength Greater than 100',
@@ -30,6 +28,7 @@ const QUERY_TEMPLATES = {
   companies_and_materials_they_sell_in_electronics_industry:
     'Companies and Materials They Sell in Electronics Industry',
   three_most_expensive_general_categories: 'Three Most Expensive General Categories',
+  all_materials_and_their_environmental_impacts: 'All Materials and Their Environmental Impacts',
 };
 
 const ExecuteQueryPage = () => {

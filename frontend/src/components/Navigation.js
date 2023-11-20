@@ -15,13 +15,7 @@ const Navigation = () => {
           <Link to="/materials">Materials</Link>
         </li>
         <li>
-          <Link to="/industrial-applications">Industrial Applications</Link>
-        </li>
-        <li>
           <Link to="/sold-by">Sold By</Link>
-        </li>
-        <li>
-          <Link to="/environment">Environment</Link>
         </li>{' '}
       </ul>
     </nav>
