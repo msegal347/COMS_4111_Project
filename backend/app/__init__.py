@@ -12,7 +12,7 @@ def create_app():
     from .controllers import main
     app.register_blueprint(main)
 
-    from .controllers import company_routes, material_routes, environmental_routes, industrial_routes, general_categories_routes, sold_by_routes, query_routes, execute_query_routes
+    from .controllers import company_routes, material_routes, environmental_routes, industrial_routes, general_categories_routes, sold_by_routes, query_routes, execute_query_routes, custom_query_routes
     app.register_blueprint(company_routes.company_bp)
     app.register_blueprint(material_routes.material_bp)
     app.register_blueprint(environmental_routes.environmental_bp)
@@ -21,5 +21,6 @@ def create_app():
     app.register_blueprint(sold_by_routes.sold_by_bp)
     app.register_blueprint(query_routes.query_bp)
     app.register_blueprint(execute_query_routes.execute_query_bp)
+    app.register_blueprint(custom_query_routes.custom_query_bp)
 
     return app

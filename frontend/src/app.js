@@ -10,6 +10,7 @@ import SoldByPage from './pages/SoldByPage';
 import QueryPage from './pages/QueryPage';
 import './styles/main.css';
 import ExecuteQueryPage from './pages/ExecuteQueryPage';
+import CustomQueryPage from './pages/CustomQueryPage';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/sold-by" element={<SoldByPage />} />
         <Route path="/environment" element={<EnvironmentPage />} />{' '}
         <Route path="/execute-query" element={<ExecuteQueryPage />} />
+        <Route path="/custom-query" element={<CustomQueryPage />} />
         <Route path="/" element={<ExecuteQueryPage />} />
       </Routes>
     </Router>
