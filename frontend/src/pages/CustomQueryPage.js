@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import useCustomQuery from '../hooks/useCustomQuery';
 import { getGeneralCategories, getCompanies, getIndustrialApplications } from '../services/api';
+import '../styles/CustomQueryPage.css';
 
 const CustomQueryPage = () => {
-  // State hooks for dropdown data
   const [categories, setCategories] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [applications, setApplications] = useState([]);
 
-  // State hooks for selected dropdown values
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedCompany, setSelectedCompany] = useState('');
   const [selectedApplication, setSelectedApplication] = useState('');
 
-  // Custom hook for running the query
   const { results, runCustomQuery, loading, error } = useCustomQuery();
 
-  // Fetch dropdown data on component mount
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,7 +30,6 @@ const CustomQueryPage = () => {
     fetchData();
   }, []);
 
-  // Handle form submit
   const handleSubmit = async event => {
     event.preventDefault();
     console.log('Submitting query with filters:', {

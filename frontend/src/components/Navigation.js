@@ -12,13 +12,10 @@ const Navigation = () => {
           <Link to="/custom-query">Custom Query</Link>
         </li>
         <li>
-          <Link to="/query">Search Database</Link>
+          <Link to="/update-database">Update Materials</Link>
         </li>
         <li>
-          <Link to="/materials">Materials</Link>
-        </li>
-        <li>
-          <Link to="/sold-by">Sold By</Link>
+          <Link to="/update-sold-by">Update Sold By</Link>
         </li>{' '}
       </ul>
     </nav>

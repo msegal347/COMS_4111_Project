@@ -19,7 +19,6 @@ custom_query_bp = Blueprint('custom_query', __name__, url_prefix='/api/custom-qu
 def custom_query():
     logger.debug("Handling custom query request")
     try:
-        # Corrected code to obtain a connection from the engine
         with current_app.app_context():
             connection = db.engine.connect()
 
@@ -48,7 +47,6 @@ def custom_query():
         company_filter = query_data.get('company')
         application_filter = query_data.get('application')
 
-        # Base SQL query
         query = """
         SELECT DISTINCT
             m.MaterialName,
@@ -63,7 +61,6 @@ def custom_query():
         LEFT JOIN IndustrialApplications ia ON hpu.ApplicationID = ia.ApplicationID
         """
 
-        # Adding conditions for filtering
         conditions = []
         params = {}
         if category_filter:
@@ -86,7 +83,7 @@ def custom_query():
             logger.debug("Query executed successfully")
             rows = [row._asdict() for row in result]
             logger.debug("rows: " + str(rows))
-            
+
         logger.debug("Sending back query results")
         return jsonify({"dropdown_data": dropdown_data, "query_results": rows}), 200
 

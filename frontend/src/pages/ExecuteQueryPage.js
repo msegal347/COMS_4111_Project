@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import useExecuteQuery from '../hooks/useExecuteQuery';
+import '../styles/ExecuteQueryPage.css';
 
 const QUERY_TEMPLATES = {
   select_all_materials: 'All Materials',

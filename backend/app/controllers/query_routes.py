@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, current_app
-from sqlalchemy.orm import joinedload
+import sqlalchemy
 from app.extensions import db
 from app.models import Material, Company, EnvironmentalImpact, SoldBy, GeneralCategory, IndustrialApplication, HasPracticalUses
 import traceback
